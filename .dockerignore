@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vscode
+.idea
+.DS_Store
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Tests
+*_test.go
+test/
+coverage/
+*.test
+
+# Temporary files
+tmp/
+logs/
+*.log
+*.tmp
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build artifacts
+dist/
+build/
+bin/
+*.exe
+
+# Environment
+.env
+.env.*
+
+# AI Tools
+.ai/
+.cursor/
+.trae/

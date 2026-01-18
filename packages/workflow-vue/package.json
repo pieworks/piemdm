@@ -1,0 +1,88 @@
+{
+  "name": "workflow-vue",
+  "type": "module",
+  "main": "./src/lib/index.js",
+  "module": "./src/lib/index.js",
+  "keywords": [
+    "vue",
+    "vue3",
+    "workflow",
+    "builder",
+    "component",
+    "ui",
+    "library"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pieworks/piemdm.git",
+    "directory": "packages/workflow-vue"
+  },
+  "homepage": "https://github.com/pieworks/piemdm/tree/main/packages/workflow-vue#readme",
+  "bugs": {
+    "url": "https://github.com/pieworks/piemdm/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/lib/index.d.ts",
+      "import": "./src/lib/index.js",
+      "require": "./src/lib/index.js"
+    },
+    "./style.css": "./src/lib/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "README_CN.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src --ext js,vue",
+    "format": "prettier --write \"src/**/*.{js,vue}\"",
+    "type-check": "tsgo --noEmit"
+  },
+  "peerDependencies": {
+    "bootstrap": "^5.3.0",
+    "bootstrap-icons": "^1.11.0",
+    "vue": "^3.4.0"
+  },
+  "dependencies": {
+    "uuid": "^9.0.1",
+    "vue-select": "4.0.0-beta.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@typescript/native-preview": "7.0.0-dev.20251205.1",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "@vitest/coverage-v8": "^4.0.3",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/test-utils": "^2.4.6",
+    "autoprefixer": "^10.4.0",
+    "cssnano": "^6.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-vue": "^9.33.0",
+    "globals": "^15.0.0",
+    "postcss": "^8.4.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.6.3",
+    "vite": "^7.2.6",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^4.0.3",
+    "vue-tsc": "^2.1.6"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

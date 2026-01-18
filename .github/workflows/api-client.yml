@@ -1,0 +1,83 @@
+name: Generate API Client
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'backend/**/*.go'
+      - 'backend/docs/**'
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'backend/**/*.go'
+
+jobs:
+  generate-api-client:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.11'
+          cache: true
+          cache-dependency-path: backend/go.sum
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install Swag
+        run: go install github.com/swaggo/swag/cmd/swag@latest
+
+      - name: Generate Swagger documentation
+        working-directory: backend
+        run: make swagger
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate TypeScript API client
+        run: ./scripts/gen-api-client.sh
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code shared/ || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Fail if changes detected
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          echo "Error: API client code is out of sync with backend changes."
+          echo "Please run './scripts/gen-api-client.sh' locally and commit the changes."
+          exit 1
+
+      - name: Comment on PR
+        if: steps.git-check.outputs.changed == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ API 客户端代码与后端定义不一致。\n\n检测到 `shared/` 目录下有变更。请在本地运行 `./scripts/gen-api-client.sh` 更新生成代码并提交。'
+            })

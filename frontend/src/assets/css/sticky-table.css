@@ -1,0 +1,99 @@
+/**
+ * Sticky Table Styles
+ *
+ * 用于实现表格的冻结列效果（左侧 checkbox 列和右侧 actions 列）
+ * 核心：使用 border-collapse: separate 模式，解决 sticky 元素边框丢失问题
+ */
+
+/*
+  核心修复: 使用 separate 模型
+  在 collapse 模式下，sticky 元素的边框会被浏览器渲染机制"合并"导致滚动时丢失。
+  改用 separate 后，每个单元格拥有独立边框，sticky 时边框会随单元格移动。
+*/
+.sticky-table {
+  border-collapse: separate !important;
+  border-spacing: 0;
+}
+
+/* 手动绘制表格边框 */
+.sticky-table th,
+.sticky-table td {
+  /*
+    使用 separate 后，Bootstrap 的边框样式需要调整。
+    这里重新定义边框：只画右边和下边，配合 table 的左边和上边形成闭环
+  */
+  border-bottom: 1px solid #dee2e6 !important;
+  border-right: 1px solid #dee2e6 !important;
+  border-top: 0 !important;
+  border-left: 0 !important;
+}
+
+/* 修复最左侧边框缺失的问题 */
+.sticky-table thead tr th:first-child,
+.sticky-table tbody tr td:first-child {
+  border-left: 1px solid #dee2e6 !important;
+}
+
+/* 修复最顶部边框缺失的问题 */
+.sticky-table thead tr:first-child th {
+  border-top: 1px solid #dee2e6 !important;
+}
+
+/*
+  修复圆角问题 (Bootstrap .table-bordered 可能会带圆角，这里直角显示更整齐)
+*/
+.sticky-table.table-bordered {
+  border: 0;
+  /* 去掉 table 自身的边框，改由单元格绘制 */
+}
+
+/* 冻结列基础样式 */
+.sticky-col {
+  position: sticky;
+  z-index: 10;
+}
+
+/* 表头 sticky 列层级稍高，防止被 tbody 遮挡 */
+.sticky-table thead tr th.sticky-col {
+  z-index: 11;
+}
+
+/* Checkbox 列 (左侧第1列) */
+.sticky-col-checkbox {
+  left: -4px;
+  z-index: 20;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+}
+
+/* 数据列 (左侧第2列，可选冻结) */
+.sticky-col-data {
+  left: 40px;
+}
+
+/* Actions 列 (右侧) */
+.sticky-table .sticky-col-actions {
+  right: -4px;
+  border-left: 1px solid #dee2e6 !important;
+  /* 操作列单元格内边距 */
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+/* 操作按钮统一间隔 */
+/* 模拟 class="mx-2"：首个按钮左右间隔 0.5rem */
+.sticky-table .sticky-col-actions a:first-child {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+/* 模拟 class="me-2"：非首个按钮右侧间隔 0.5rem */
+.sticky-table .sticky-col-actions a:not(:first-child) {
+  margin-right: 0.5rem;
+}
+
+/* 表头 actions 列层级 */
+.sticky-table thead tr th.sticky-col-actions {
+  z-index: 11;
+}

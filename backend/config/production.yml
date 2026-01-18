@@ -1,0 +1,28 @@
+env: production
+http:
+  port: 8000
+security:
+  api_sign:
+    app_key: ""
+    app_security: ""
+  jwt:
+    key: "" # Injected via SECURITY_JWT_KEY env var
+data:
+  mysql:
+    user: "" # Injected via DATA_MYSQL_DSN env var
+  redis:
+    addr: "" # Injected via DATA_REDIS_ADDR env var
+    password: ""
+    db: 0
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+
+log:
+  log_path: "/var/log/piemdm"
+  log_level: info
+  encoding: json           # json or console
+  log_file_name: "server.log"
+  max_backups: 30
+  max_age: 7
+  max_size: 1024
+  compress: true

@@ -1,0 +1,77 @@
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: ../backend
+      dockerfile: scripts/build/Dockerfile
+    container_name: piemdm-backend
+    restart: unless-stopped
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - APP_CONF=config/production.yml
+      # 使用 Viper 兼容的环境变量覆盖配置 (config.go AutomaticEnv)
+      # 格式: user:pass@tcp(host:port)/dbname
+      # 注意：不再使用 linked service name (mysql)，需在 .env 中配置实际地址
+      - DATA_MYSQL_DSN=${DATA_MYSQL_DSN}
+      - DATA_REDIS_ADDR=${DATA_REDIS_ADDR}
+      - DATA_REDIS_PASSWORD=${DATA_REDIS_PASSWORD}
+      - SECURITY_JWT_KEY=${JWT_SECRET:-your_jwt_secret_key}
+    ports:
+      - "${API_PORT:-8787}:8787"
+    volumes:
+      - ../backend/storage/logs:/app/storage/logs
+      - ../backend/export:/app/export
+    networks:
+      - piemdm-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:8787/health",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend Web
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: piemdm-frontend
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-80}:80"
+    depends_on:
+      - backend
+    networks:
+      - piemdm-network
+
+  # Nginx Reverse Proxy (Optional)
+  nginx:
+    image: nginx:alpine
+    container_name: piemdm-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - piemdm-network
+    profiles:
+      - nginx
+
+networks:
+  piemdm-network:
+    driver: bridge

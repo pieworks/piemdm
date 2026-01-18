@@ -1,0 +1,6048 @@
+basePath: /
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  internal_handler.CreatePermissionRequest:
+    properties:
+      action:
+        maxLength: 64
+        type: string
+      code:
+        maxLength: 64
+        type: string
+      description:
+        maxLength: 255
+        type: string
+      name:
+        maxLength: 64
+        type: string
+      parent_id:
+        type: integer
+      resource:
+        maxLength: 64
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  internal_handler.UpdatePermissionRequest:
+    properties:
+      action:
+        maxLength: 64
+        type: string
+      code:
+        maxLength: 64
+        type: string
+      description:
+        maxLength: 255
+        type: string
+      id:
+        type: integer
+      name:
+        maxLength: 64
+        type: string
+      parent_id:
+        type: integer
+      resource:
+        maxLength: 64
+        type: string
+    required:
+    - code
+    - id
+    - name
+    type: object
+  piemdm_internal_model.Application:
+    properties:
+      appId:
+        description: AppId
+        maxLength: 64
+        type: string
+      appSecret:
+        description: AppSecret
+        maxLength: 128
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        description: 简介
+        maxLength: 255
+        type: string
+      id:
+        type: integer
+      ip:
+        description: 系统来源IP
+        type: string
+      name:
+        description: 系统名称
+        maxLength: 128
+        type: string
+      status:
+        description: 状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+  piemdm_internal_model.Approval:
+    properties:
+      approvalDefCode:
+        description: 审批定义编码
+        maxLength: 128
+        type: string
+      code:
+        description: 审批实例唯一编码
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      createdBy:
+        description: 审计字段
+        type: string
+      currentTaskID:
+        description: 当前任务ID
+        maxLength: 128
+        type: string
+      currentTaskName:
+        description: 当前任务名称
+        maxLength: 128
+        type: string
+      deletedAt:
+        allOf:
+        - $ref: '#/definitions/gorm.DeletedAt'
+        description: 删除时间
+      description:
+        description: 申请说明
+        type: string
+      entityCode:
+        description: 关联实体编码
+        maxLength: 64
+        type: string
+      formData:
+        description: 表单数据
+        type: string
+      formSchema:
+        description: 表单结构JSON
+        type: string
+      id:
+        type: integer
+      priority:
+        description: 审批信息
+        type: integer
+      serialNumber:
+        description: 流程信息
+        maxLength: 128
+        type: string
+      status:
+        description: |-
+          状态信息，审批实例状态
+          可选值有：
+          - Pending：审批中
+          - Approved：通过
+          - Rejected：拒绝
+          - Canceled：撤回
+          - Deleted：删除
+        type: string
+      title:
+        description: 审批标题
+        maxLength: 128
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+      urgency:
+        description: 紧急程度：Low/Normal/High/Urgent
+        type: string
+    required:
+    - approvalDefCode
+    - title
+    type: object
+  piemdm_internal_model.ApprovalDefinition:
+    properties:
+      approvalSystem:
+        description: |-
+          状态和元数据，
+          SystemBuilt 系统内置，Custom 自定义，Feishu，DingDing，WeChat
+        type: string
+      code:
+        description: 审批定义唯一编码
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      createdBy:
+        description: 审计字段
+        type: string
+      deletedAt:
+        allOf:
+        - $ref: '#/definitions/gorm.DeletedAt'
+        description: 删除时间
+      description:
+        description: 审批描述
+        maxLength: 500
+        type: string
+      formData:
+        description: |-
+          表单配置
+          FormConfig string `gorm:"type:text"` // 表单配置JSON
+          FormSchema string `gorm:"type:text"` // 表单结构定义
+        type: string
+      id:
+        type: integer
+      name:
+        description: 审批名称
+        maxLength: 128
+        type: string
+      nodeList:
+        description: |-
+          流程配置
+          ProcessConfig string `gorm:"type:text"` // 流程配置JSON
+          ProcessNodes  string `gorm:"type:text"` // 流程节点配置
+        type: string
+      status:
+        description: 状态:Normal 正常, Frozen 已冻结, Deleted 已删除
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+    required:
+    - name
+    type: object
+  piemdm_internal_model.ApprovalNode:
+    properties:
+      approvalDefCode:
+        description: 审批定义编码
+        maxLength: 128
+        type: string
+      approverConfig:
+        description: 审批人配置JSON
+        type: string
+      approverType:
+        description: 审批配置
+        maxLength: 32
+        type: string
+      conditionConfig:
+        description: 条件配置JSON
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      createdBy:
+        description: 创建人
+        type: string
+      deletedAt:
+        allOf:
+        - $ref: '#/definitions/gorm.DeletedAt'
+        description: 删除时间
+      description:
+        description: 节点描述，审批要点
+        type: string
+      id:
+        type: integer
+      nodeCode:
+        description: 节点编码
+        maxLength: 128
+        type: string
+      nodeName:
+        description: 节点名称
+        maxLength: 128
+        type: string
+      nodeType:
+        description: 节点类型：START/APPROVAL/CONDITION/CC/END/PARALLEL/MERGE
+        maxLength: 16
+        type: string
+      sortOrder:
+        description: 排序
+        type: integer
+      status:
+        description: 状态:Normal 正常, Frozen 已冻结, Deleted 已删除
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+    required:
+    - approvalDefCode
+    type: object
+  piemdm_internal_model.ApprovalTask:
+    properties:
+      approvalCode:
+        description: 审批实例编码
+        maxLength: 128
+        type: string
+      approverConfig:
+        description: 审批人配置JSON
+        type: string
+      approverType:
+        description: |-
+          审批配置
+          审批方式
+          可选值有：
+          AND：会签
+          OR：或签
+          AUTO_PASS：自动通过
+          AUTO_REJECT：自动拒绝
+          SEQUENTIAL：按顺序
+        maxLength: 32
+        type: string
+      assigneeID:
+        description: 审批人信息
+        maxLength: 64
+        type: string
+      assigneeName:
+        description: 审批人姓名
+        maxLength: 64
+        type: string
+      attachments:
+        description: 附件列表JSON
+        type: string
+      comment:
+        description: 审批意见
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        description: 审计字段
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      nodeCode:
+        description: 节点编码
+        maxLength: 128
+        type: string
+      nodeName:
+        description: 节点名称
+        maxLength: 128
+        type: string
+      nodeType:
+        description: |-
+          node_type,approver_type,approver_config 三个字段暂时没有用
+          节点类型：START/APPROVAL/CONDITION/CC/END/PARALLEL/MERGE
+        maxLength: 16
+        type: string
+      remindCount:
+        description: 催办次数
+        type: integer
+      status:
+        description: |-
+          任务状态
+          审批任务状态
+          可选值有：
+          - PENDING：审批中
+          - APPROVED：通过
+          - REJECTED：拒绝
+          - TRANSFERRED：已转交
+          - DONE：完成
+        type: string
+      taskCode:
+        description: 任务唯一编码
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      urgency:
+        description: |-
+          审批信息
+          Priority     int    `gorm:"default:0"` // 优先级
+          紧急程度：Low/Normal/High/Urgent
+        type: string
+    required:
+    - approvalCode
+    type: object
+  piemdm_internal_model.Cron:
+    properties:
+      appId:
+        maxLength: 64
+        type: string
+      appKey:
+        maxLength: 64
+        type: string
+      code:
+        description: Cron编码
+        maxLength: 8
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        maxLength: 255
+        type: string
+      entityCode:
+        description: 实体编码
+        maxLength: 64
+        type: string
+      expression:
+        description: Cron表达式
+        maxLength: 32
+        type: string
+      id:
+        type: integer
+      method:
+        maxLength: 16
+        type: string
+      name:
+        description: 任务名称
+        maxLength: 128
+        type: string
+      protocol:
+        description: 协议类型，Http, Rest, GraphQL, GRPC, Soap, Jwt
+        maxLength: 32
+        type: string
+      signType:
+        maxLength: 64
+        type: string
+      status:
+        description: 状态:Normal 正常, Frozen 已冻结, Deleted 已删除
+        type: string
+      system:
+        description: 系统名称
+        maxLength: 64
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      url:
+        maxLength: 255
+        type: string
+    required:
+    - code
+    type: object
+  piemdm_internal_model.CronLog:
+    properties:
+      createdAt:
+        type: string
+      endTime:
+        description: 结束时间
+        type: string
+      errMsg:
+        description: 错误信息
+        maxLength: 512
+        type: string
+      execTime:
+        description: 执行时间(秒)
+        type: integer
+      id:
+        type: integer
+      method:
+        description: 任务名称
+        maxLength: 32
+        type: string
+      param:
+        description: 任务参数
+        maxLength: 128
+        type: string
+      startTime:
+        description: 开始时间
+        type: string
+      status:
+        description: 状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      updatedAt:
+        type: string
+    required:
+    - method
+    type: object
+  piemdm_internal_model.FieldAttachment:
+    properties:
+      accept:
+        description: 允许的文件类型
+        items:
+          type: string
+        type: array
+      maxSize:
+        description: 最大文件大小（字节）
+        type: integer
+      multiple:
+        description: 是否支持多文件上传
+        type: boolean
+    type: object
+  piemdm_internal_model.FieldBehavior:
+    properties:
+      defaultValue: {}
+      readOnly:
+        type: boolean
+      show:
+        description: 是否显示 (对应 is_show)
+        type: boolean
+      visibleOn:
+        description: 表达式
+        type: string
+    type: object
+  piemdm_internal_model.FieldDataSource:
+    properties:
+      api:
+        description: API
+        type: string
+      fillBack:
+        additionalProperties:
+          type: string
+        type: object
+      filter:
+        additionalProperties: {}
+        type: object
+      foreignKey:
+        type: string
+      labelField:
+        type: string
+      options:
+        description: Static
+        items:
+          $ref: '#/definitions/piemdm_internal_model.OptionItem'
+        type: array
+      targetTable:
+        description: Relation
+        type: string
+      type:
+        description: static, api, relation
+        type: string
+      valueField:
+        type: string
+    type: object
+  piemdm_internal_model.FieldDateTime:
+    properties:
+      dateFormat:
+        description: 日期格式
+        type: string
+      defaultToCurrentTime:
+        description: 创建时默认当前时间
+        type: boolean
+      onUpdateToCurrentTime:
+        description: 更新时自动更新为当前时间
+        type: boolean
+      showTime:
+        description: 是否显示时间选择器
+        type: boolean
+      timeFormat:
+        description: 时间格式
+        type: string
+      timezone:
+        description: 是否支持时区
+        type: boolean
+    type: object
+  piemdm_internal_model.FieldOptions:
+    properties:
+      attachment:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldAttachment'
+        description: 附件
+      behavior:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldBehavior'
+        description: 行为配置
+      datasource:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldDataSource'
+        description: 数据源 (含关联) - 保留兼容
+      datetime:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldDateTime'
+        description: 日期时间行为
+      patterns:
+        description: 自动编码
+        items:
+          $ref: '#/definitions/piemdm_internal_model.SequencePattern'
+        type: array
+      relation:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldRelation'
+        description: 新增配置
+      richtext:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldRichText'
+        description: 富文本
+      sort:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldSort'
+        description: 排序字段
+      trim:
+        description: 字符串去空格
+        type: boolean
+      ui:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldUI'
+        description: 前端 UI 配置
+      validation:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldValidation'
+        description: 验证规则
+    type: object
+  piemdm_internal_model.FieldRelation:
+    properties:
+      filter:
+        additionalProperties: {}
+        description: 过滤条件
+        type: object
+      foreignKey:
+        description: 外键（可自动生成）
+        type: string
+      labelField:
+        description: 显示字段（默认 name）
+        type: string
+      multiple:
+        description: 是否多选
+        type: boolean
+      target:
+        description: 关联表
+        type: string
+      valueField:
+        description: 存储字段 = 关联键（默认 code）
+        type: string
+    type: object
+  piemdm_internal_model.FieldRichText:
+    properties:
+      fileCollection:
+        description: 附件存储集合名称
+        type: string
+      length:
+        description: short, long
+        type: string
+      toolbar:
+        description: 工具栏配置
+        items:
+          type: string
+        type: array
+    type: object
+  piemdm_internal_model.FieldSort:
+    properties:
+      scopeKey:
+        description: 排序作用域字段（如按 status 分组排序）
+        type: string
+    type: object
+  piemdm_internal_model.FieldUI:
+    properties:
+      placeholder:
+        description: 占位符 (可选)
+        type: string
+      title:
+        description: 标题 (可选)
+        type: string
+      widget:
+        description: 组件类型 (必填)
+        type: string
+      widgetProps:
+        additionalProperties: {}
+        description: 组件参数 (可选)
+        type: object
+    type: object
+  piemdm_internal_model.FieldValidation:
+    properties:
+      format:
+        description: '格式: phone, email, url'
+        type: string
+      max:
+        description: 最大值
+        type: integer
+      message:
+        description: 自定义错误消息
+        type: string
+      min:
+        description: 最小值
+        type: integer
+      pattern:
+        description: 自定义正则
+        type: string
+      precision:
+        description: 总位数 (仅 decimal 类型)
+        type: integer
+      required:
+        type: boolean
+      scale:
+        description: 小数位数 (仅 decimal 类型)
+        type: integer
+      validator:
+        description: '预定义验证器: integer, email, phone, url'
+        type: string
+    type: object
+  piemdm_internal_model.NotificationLog:
+    properties:
+      ApprovalID:
+        description: 审批实例ID
+        type: string
+      Content:
+        description: 通知内容
+        type: string
+      CreatedAt:
+        type: string
+      ErrorMessage:
+        description: 错误信息
+        type: string
+      ExtraData:
+        description: 额外数据JSON
+        type: string
+      ID:
+        type: integer
+      MaxRetryCount:
+        description: 最大重试次数
+        type: integer
+      NextRetryTime:
+        description: 下次重试时间
+        type: string
+      NotificationType:
+        description: 通知类型
+        maxLength: 16
+        type: string
+      RecipientID:
+        description: 接收人ID
+        maxLength: 64
+        type: string
+      RecipientType:
+        description: 接收人类型
+        maxLength: 16
+        type: string
+      RetryCount:
+        description: 重试次数
+        type: integer
+      SendTime:
+        description: 发送时间
+        type: string
+      Status:
+        description: 发送状态
+        type: string
+      TaskID:
+        description: 任务ID
+        type: string
+      TemplateCode:
+        description: 模板编码
+        type: string
+      TemplateID:
+        description: 模板ID
+        type: string
+      Title:
+        description: 通知标题
+        maxLength: 200
+        type: string
+      UpdatedAt:
+        type: string
+    required:
+    - Content
+    - NotificationType
+    - RecipientID
+    - RecipientType
+    - Title
+    type: object
+  piemdm_internal_model.NotificationTemplate:
+    properties:
+      contentTemplate:
+        description: 内容模板
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        description: 描述
+        type: string
+      id:
+        type: string
+      notificationType:
+        description: 通知类型
+        maxLength: 16
+        type: string
+      status:
+        description: 状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      templateCode:
+        description: 模板编码
+        maxLength: 100
+        type: string
+      templateName:
+        description: 模板名称
+        maxLength: 200
+        type: string
+      templateType:
+        description: 模板类型
+        maxLength: 32
+        type: string
+      titleTemplate:
+        description: 标题模板
+        maxLength: 500
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      variables:
+        description: 变量定义JSON
+        type: string
+    required:
+    - contentTemplate
+    - notificationType
+    - templateCode
+    - templateName
+    - templateType
+    - titleTemplate
+    type: object
+  piemdm_internal_model.OptionItem:
+    properties:
+      color:
+        type: string
+      label:
+        type: string
+      value: {}
+    type: object
+  piemdm_internal_model.Permission:
+    properties:
+      action:
+        description: 操作类型,如 read, write
+        type: string
+      children:
+        description: 关联关系
+        items:
+          $ref: '#/definitions/piemdm_internal_model.Permission'
+        type: array
+      code:
+        description: 权限标识,如 user:list
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        description: 创建人
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        description: 描述
+        type: string
+      id:
+        type: integer
+      name:
+        description: 权限名称
+        type: string
+      parent_id:
+        description: 父权限ID,用于构建树状结构
+        type: integer
+      resource:
+        description: 资源类型,如 user, role
+        type: string
+      status:
+        description: 状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  piemdm_internal_model.Role:
+    properties:
+      code:
+        description: 表名,英文
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        description: 创建人
+        type: string
+      data_scope:
+        description: '数据范围: All, Subordinate, Self'
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      desc:
+        description: 描述
+        type: string
+      id:
+        type: integer
+      name:
+        description: 名称，可以中文
+        type: string
+      permissions:
+        items:
+          $ref: '#/definitions/piemdm_internal_model.Permission'
+        type: array
+      status:
+        description: 状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  piemdm_internal_model.SequencePattern:
+    properties:
+      options:
+        additionalProperties: {}
+        description: 配置选项
+        type: object
+      type:
+        description: string, integer, date
+        type: string
+    type: object
+  piemdm_internal_model.Table:
+    properties:
+      DisplayMode:
+        description: 展示模式：List 列表, Tree 树形
+        enum:
+        - List
+        - Tree
+        type: string
+      ParentField:
+        description: 父表关联字段
+        maxLength: 64
+        type: string
+      ParentTable:
+        description: 父表Code（仅当TableType=Item时有效，不带t_前缀）
+        maxLength: 64
+        type: string
+      SelfField:
+        description: 本表关联字段
+        maxLength: 64
+        type: string
+      TableType:
+        description: 表类型：Entity 主表实体, Item 行项目
+        enum:
+        - Entity
+        - Item
+        type: string
+      code:
+        description: 表名,英文
+        maxLength: 64
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        description: 这些都是服务端参数，不用校验。
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        maxLength: 255
+        type: string
+      id:
+        type: integer
+      name:
+        description: 名称，可以中文
+        maxLength: 128
+        type: string
+      sort:
+        maximum: 9999
+        type: integer
+      status:
+        description: 状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  piemdm_internal_model.TableApprovalDefinition:
+    properties:
+      approval_def_code:
+        type: string
+      created_at:
+        type: string
+      created_by:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      entity_code:
+        type: string
+      id:
+        type: integer
+      operation:
+        type: string
+      status:
+        description: 状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      updated_at:
+        type: string
+      updated_by:
+        type: string
+    type: object
+  piemdm_internal_model.TableField:
+    properties:
+      code:
+        description: 编码
+        maxLength: 64
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        description: 创建人
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        description: 属性描述
+        maxLength: 256
+        type: string
+      fieldType:
+        description: |-
+          FieldType 目前会保存字段格式，在后端进行字段默认配置，字段校验等
+          后端的 FieldPreset 预设系统设计得非常完善，每个 FieldType 已经包含：
+            DataType (数据库类型)
+            Length (字段长度)
+            UI.Widget (UI 组件)
+            Validation (验证规则)
+          结论：不需要移除 FieldType，它是一个很好的设计！
+        maxLength: 32
+        type: string
+      groupName:
+        description: 组名
+        maxLength: 64
+        type: string
+      id:
+        description: ===== field attr
+        type: integer
+      indexName:
+        description: 索引名称，扩展视图使用，不对外显示
+        maxLength: 128
+        type: string
+      indexPriority:
+        description: 索引名称，扩展视图使用，不对外显示
+        maximum: 3
+        type: integer
+      isFilter:
+        description: ===== show style
+        maxLength: 8
+        type: string
+      isIndex:
+        description: 是否创建索引，Yes,No
+        maxLength: 8
+        type: string
+      isShow:
+        description: 是否展示字段  Yes：是  No-否
+        maxLength: 8
+        type: string
+      isUnique:
+        description: 唯一标识，Yes,No
+        maxLength: 8
+        type: string
+      length:
+        description: 属性长度
+        type: integer
+      name:
+        description: 属性名称
+        maxLength: 128
+        type: string
+      options:
+        allOf:
+        - $ref: '#/definitions/piemdm_internal_model.FieldOptions'
+        description: ========== Options JSON 字段
+      required:
+        description: 是否必填 Yes：必填 No:不必填
+        maxLength: 8
+        type: string
+      sort:
+        description: 显示顺序
+        type: integer
+      status:
+        description: |-
+          ========== 状态
+          状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      tableCode:
+        description: 所属模型
+        maxLength: 64
+        type: string
+      type:
+        description: '数据库字段类型(DB层): Text, Integer, Date, Decimal 等'
+        maxLength: 16
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+    required:
+    - code
+    - length
+    - name
+    - tableCode
+    - type
+    type: object
+  piemdm_internal_model.User:
+    properties:
+      admin:
+        description: 是否为管理员
+        maxLength: 3
+        type: string
+      avatar:
+        description: 头像地址
+        maxLength: 255
+        type: string
+      createdBy:
+        description: 创建人
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        description: 简介
+        maxLength: 255
+        type: string
+      displayName:
+        description: 显示名称
+        maxLength: 64
+        type: string
+      email:
+        description: 邮箱
+        maxLength: 255
+        type: string
+      employeeID:
+        description: 工号
+        maxLength: 64
+        type: string
+      firstName:
+        description: 名称
+        maxLength: 64
+        type: string
+      id:
+        type: integer
+      language:
+        description: 语言
+        maxLength: 8
+        type: string
+      lastLogin:
+        description: 最后登录时间
+        type: string
+      lastName:
+        description: 姓氏
+        maxLength: 64
+        type: string
+      password:
+        description: 密码
+        maxLength: 128
+        type: string
+      permissions:
+        description: 权限列表(不持久化)
+        items:
+          type: string
+        type: array
+      phone:
+        description: 电话
+        maxLength: 64
+        type: string
+      roles:
+        items:
+          $ref: '#/definitions/piemdm_internal_model.Role'
+        type: array
+      sex:
+        description: 性别
+        maxLength: 8
+        type: string
+      status:
+        description: |-
+          状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+          状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      superiorUsername:
+        description: 上级用户名
+        maxLength: 64
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+      username:
+        description: 用户名
+        maxLength: 64
+        type: string
+    required:
+    - admin
+    - displayName
+    - email
+    - employeeID
+    - password
+    - superiorUsername
+    - username
+    type: object
+  piemdm_internal_model.Webhook:
+    properties:
+      contentType:
+        description: |-
+          请求方式：POST，GET
+          数据类型：plain，application/json，application/xxx-form-urlencoded，application/xml
+          Data：string
+          Headers；[]Key，Value
+          Response示例
+          Basic Auth 用户名
+          Basic Auth 密码
+        maxLength: 128
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        maxLength: 255
+        type: string
+      events:
+        description: 监控什么事件
+        maxLength: 256
+        type: string
+      id:
+        type: integer
+      secret:
+        description: AppSecret
+        maxLength: 128
+        type: string
+      status:
+        description: 状态：Normal 正常 Frozen 已冻结 Deleted 已删除
+        type: string
+      tableCode:
+        description: 主数据Code
+        maxLength: 64
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      url:
+        description: 调用Url
+        maxLength: 256
+        type: string
+      username:
+        description: 用户名
+        maxLength: 64
+        type: string
+    required:
+    - events
+    - secret
+    - url
+    type: object
+  piemdm_internal_model.WebhookDelivery:
+    properties:
+      completedAt:
+        description: 完成时间
+        type: string
+      deliveredAt:
+        description: 投递时间
+        type: string
+      deliveryCode:
+        description: 调用编号
+        maxLength: 64
+        type: string
+      entityID:
+        description: 实体编码
+        type: integer
+      event:
+        description: 'Event name: Release 发布(所有变更都会发布)'
+        maxLength: 32
+        type: string
+      hookID:
+        description: WebHook编号
+        type: integer
+      id:
+        type: integer
+      requestHeaders:
+        description: 请求头
+        type: string
+      requestPayload:
+        description: 请求参数
+        type: string
+      responseBody:
+        description: 回应信息
+        type: string
+      responseHeaders:
+        description: 回应头
+        type: string
+      responseMessage:
+        description: 回应消息
+        type: string
+      responseStatus:
+        description: 回应状态
+        maximum: 999
+        type: integer
+    required:
+    - deliveryCode
+    - entityID
+    - hookID
+    type: object
+  piemdm_internal_pkg_request.BatchRemindRequest:
+    properties:
+      assigneeId:
+        maxLength: 64
+        minLength: 1
+        type: string
+    required:
+    - assigneeId
+    type: object
+  piemdm_internal_pkg_request.CreateApprovalDefRequest:
+    properties:
+      approvalSystem:
+        enum:
+        - SystemBuilt
+        - Feishu
+        - DingTalk
+        - WeChatWork
+        - Custom
+        type: string
+      description:
+        description: |-
+          EntityCode  string `json:"entityCode" binding:"required,min=1,max=64" comment:"关联实体编码"`
+          Category    string `json:"category" binding:"max=64" comment:"审批分类"`
+        maxLength: 500
+        type: string
+      formData:
+        maxLength: 10000
+        type: string
+      name:
+        maxLength: 128
+        minLength: 1
+        type: string
+      nodeList:
+        maxLength: 10000
+        type: string
+      status:
+        enum:
+        - Normal
+        - Frozen
+        - Deleted
+        type: string
+    required:
+    - approvalSystem
+    - name
+    type: object
+  piemdm_internal_pkg_request.CreateApprovalNodeRequest:
+    properties:
+      ApprovalDefCode:
+        maxLength: 128
+        type: string
+      ApproverConfig:
+        maxLength: 2000
+        type: string
+      ApproverType:
+        enum:
+        - USERS
+        - ROLES
+        - DEPARTMENTS
+        - AUTO_REJECT
+        - AUTO_APPROVE
+        - SYSTEM
+        type: string
+      ConditionConfig:
+        description: ApprovalMode    string `json:"ApprovalMode" binding:"oneof=OR
+          AND SEQUENTIAL" comment:"审批模式"`
+        maxLength: 5000
+        type: string
+      NodeCode:
+        maxLength: 64
+        minLength: 1
+        type: string
+      NodeName:
+        maxLength: 128
+        minLength: 1
+        type: string
+      NodeType:
+        enum:
+        - START
+        - APPROVAL
+        - CONDITION
+        - AUTO_REJECT
+        - AUTO_APPROVE
+        - CC
+        - END
+        type: string
+      SortOrder:
+        description: // TimeoutHours    int    `json:"TimeoutHours" binding:"min=0,max=720"
+          comment:"超时时间(小时)"`
+        minimum: 0
+        type: integer
+      status:
+        description: |-
+          // IsRequired       bool   `json:"IsRequired" comment:"是否必须"`
+          // AllowReject      bool   `json:"AllowReject" comment:"允许拒绝"`
+          // AllowTransfer    bool   `json:"AllowTransfer" comment:"允许转交"`
+          // AutoApprove      bool   `json:"AutoApprove" comment:"自动审批"`
+          // NotifyConfig     string `json:"NotifyConfig" binding:"max=2000" comment:"通知配置"`
+          // FormConfig       string `json:"FormConfig" binding:"max=5000" comment:"表单配置"`
+          // PermissionConfig string `json:"PermissionConfig" binding:"max=2000" comment:"权限配置"`
+          // Remark           string `json:"Remark" binding:"max=500" comment:"备注"`
+        enum:
+        - Normal
+        - Frozen
+        - Deleted
+        type: string
+    required:
+    - NodeCode
+    - NodeName
+    - NodeType
+    type: object
+  piemdm_internal_pkg_request.CreateVersionRequest:
+    properties:
+      comment:
+        maxLength: 255
+        minLength: 1
+        type: string
+      id:
+        type: integer
+    required:
+    - comment
+    - id
+    type: object
+  piemdm_internal_pkg_request.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  piemdm_internal_pkg_request.ProcessApprovalRequest:
+    properties:
+      action:
+        enum:
+        - APPROVE
+        - REJECT
+        - TRANSFER
+        - DELEGATE
+        type: string
+      approvalCode:
+        maxLength: 128
+        minLength: 1
+        type: string
+      comment:
+        maxLength: 1000
+        type: string
+      nodeCode:
+        maxLength: 64
+        minLength: 1
+        type: string
+      reason:
+        maxLength: 500
+        type: string
+    required:
+    - action
+    - approvalCode
+    - nodeCode
+    type: object
+  piemdm_internal_pkg_request.StartApprovalRequest:
+    properties:
+      approvalDefCode:
+        maxLength: 128
+        minLength: 1
+        type: string
+      entityId:
+        maxLength: 64
+        type: string
+      expectedDate:
+        type: string
+      formData:
+        maxLength: 20000
+        type: string
+      priority:
+        maximum: 10
+        minimum: 0
+        type: integer
+      remark:
+        maxLength: 1000
+        type: string
+      title:
+        maxLength: 255
+        minLength: 1
+        type: string
+      urgency:
+        enum:
+        - LOW
+        - NORMAL
+        - HIGH
+        - URGENT
+        type: string
+    required:
+    - approvalDefCode
+    - title
+    type: object
+  piemdm_internal_pkg_request.TransferTaskRequest:
+    properties:
+      reason:
+        maxLength: 500
+        minLength: 1
+        type: string
+      taskId:
+        type: integer
+      toUserId:
+        maxLength: 64
+        minLength: 1
+        type: string
+      toUserName:
+        maxLength: 128
+        minLength: 1
+        type: string
+    required:
+    - reason
+    - taskId
+    - toUserId
+    - toUserName
+    type: object
+  piemdm_internal_pkg_request.UpdateApprovalDefRequest:
+    properties:
+      approvalSystem:
+        enum:
+        - SystemBuilt
+        - Feishu
+        - DingTalk
+        - WeChatWork
+        - Custom
+        type: string
+      description:
+        description: |-
+          EntityCode  string `json:"entityCode" binding:"required,min=1,max=64" comment:"关联实体编码"`
+          Category    string `json:"category" binding:"max=64" comment:"审批分类"`
+        maxLength: 500
+        type: string
+      formData:
+        maxLength: 10000
+        type: string
+      id:
+        type: integer
+      name:
+        maxLength: 128
+        minLength: 1
+        type: string
+      nodeList:
+        maxLength: 10000
+        type: string
+      status:
+        enum:
+        - Normal
+        - Frozen
+        - Deleted
+        type: string
+    required:
+    - approvalSystem
+    - id
+    - name
+    type: object
+  piemdm_internal_pkg_request.UpdateApprovalNodeRequest:
+    properties:
+      allowReject:
+        type: boolean
+      allowTransfer:
+        type: boolean
+      approvalMode:
+        enum:
+        - OR
+        - AND
+        - SEQUENTIAL
+        type: string
+      approverConfig:
+        maxLength: 2000
+        type: string
+      approverType:
+        enum:
+        - USER
+        - ROLE
+        - DEPT
+        - EXPRESSION
+        type: string
+      autoApprove:
+        type: boolean
+      conditionConfig:
+        maxLength: 5000
+        type: string
+      formConfig:
+        maxLength: 5000
+        type: string
+      id:
+        type: integer
+      isRequired:
+        type: boolean
+      nodeName:
+        maxLength: 128
+        minLength: 1
+        type: string
+      nodeType:
+        enum:
+        - START
+        - APPROVAL
+        - CONDITION
+        - PARALLEL
+        - MERGE
+        - CC
+        - END
+        type: string
+      notifyConfig:
+        maxLength: 2000
+        type: string
+      permissionConfig:
+        maxLength: 2000
+        type: string
+      remark:
+        maxLength: 500
+        type: string
+      sortOrder:
+        minimum: 0
+        type: integer
+      timeoutHours:
+        maximum: 720
+        minimum: 0
+        type: integer
+    required:
+    - id
+    - nodeName
+    - nodeType
+    type: object
+  piemdm_internal_service.ApprovalNotificationRequest:
+    properties:
+      approval_id:
+        description: 审批实例ID
+        type: string
+      expire_time:
+        description: 过期时间
+        type: string
+      notification_type:
+        description: 通知类型
+        type: string
+      priority:
+        description: 优先级
+        type: integer
+      recipient_id:
+        description: 接收人ID
+        type: string
+      recipient_type:
+        description: 接收人类型
+        type: string
+      task_id:
+        description: 任务ID（可选）
+        type: string
+      template_type:
+        description: 模板类型
+        type: string
+      variables:
+        additionalProperties: {}
+        description: 模板变量
+        type: object
+    type: object
+  piemdm_internal_service.CreateNotificationTemplateRequest:
+    properties:
+      ContentTemplate:
+        type: string
+      CreatedBy:
+        type: string
+      Description:
+        type: string
+      NotificationType:
+        maxLength: 16
+        type: string
+      Status:
+        type: string
+      TemplateCode:
+        maxLength: 100
+        type: string
+      TemplateName:
+        maxLength: 200
+        type: string
+      TemplateType:
+        maxLength: 32
+        type: string
+      TitleTemplate:
+        maxLength: 500
+        type: string
+      Variables:
+        additionalProperties: {}
+        type: object
+    required:
+    - ContentTemplate
+    - NotificationType
+    - TemplateCode
+    - TemplateName
+    - TemplateType
+    - TitleTemplate
+    type: object
+  piemdm_internal_service.TemplateNotificationRequest:
+    properties:
+      approval_id:
+        description: 审批实例ID（可选）
+        type: string
+      expire_time:
+        description: 过期时间
+        type: string
+      notification_type:
+        description: 通知类型
+        type: string
+      priority:
+        description: 优先级
+        type: integer
+      recipient_id:
+        description: 接收人ID
+        type: string
+      recipient_type:
+        description: 接收人类型
+        type: string
+      task_id:
+        description: 任务ID（可选）
+        type: string
+      template_code:
+        description: 模板编码
+        type: string
+      variables:
+        additionalProperties: {}
+        description: 模板变量
+        type: object
+    type: object
+  piemdm_internal_service.TestNotificationRequest:
+    properties:
+      content:
+        description: 内容
+        type: string
+      notification_type:
+        description: 通知类型
+        type: string
+      recipient_id:
+        description: 接收人ID
+        type: string
+      title:
+        description: 标题
+        type: string
+      variables:
+        additionalProperties: {}
+        description: 变量
+        type: object
+    type: object
+  piemdm_internal_service.UpdateNotificationTemplateRequest:
+    properties:
+      ContentTemplate:
+        type: string
+      Description:
+        type: string
+      ID:
+        type: string
+      Status:
+        type: string
+      TemplateName:
+        maxLength: 200
+        type: string
+      TitleTemplate:
+        maxLength: 500
+        type: string
+      UpdatedBy:
+        type: string
+      Variables:
+        additionalProperties: {}
+        type: object
+    required:
+    - ContentTemplate
+    - ID
+    - TemplateName
+    - TitleTemplate
+    type: object
+  piemdm_internal_service.ValidateTemplateRequest:
+    properties:
+      ContentTemplate:
+        type: string
+      TitleTemplate:
+        type: string
+      Variables:
+        additionalProperties: {}
+        type: object
+    required:
+    - ContentTemplate
+    - TitleTemplate
+    type: object
+host: localhost:8787
+info:
+  contact:
+    email: support@piemdm.com
+    name: API Support
+  description: PieMDM Master Data Management System API Documentation
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: PieMDM API
+  version: "1.0"
+paths:
+  /admin/applications:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 应用ID
+        in: query
+        name: appId
+        type: string
+      - description: 开始日期
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Application'
+            type: array
+      summary: 获取应用列表
+      tags:
+      - 应用管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建应用请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Application'
+      summary: 创建应用
+      tags:
+      - 应用管理
+  /admin/applications/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 应用ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除应用
+      tags:
+      - 应用管理
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 应用ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Application'
+      summary: 获取应用详情
+      tags:
+      - 应用管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 应用ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新应用请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新应用
+      tags:
+      - 应用管理
+  /admin/applications/batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除应用
+      tags:
+      - 应用管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新应用状态
+      tags:
+      - 应用管理
+  /admin/approval_tasks/{id}/approve:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 审批参数
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 审批任务
+      tags:
+      - 审批任务
+  /admin/approval_tasks/{id}/reject:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 拒绝参数
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 拒绝任务
+      tags:
+      - 审批任务
+  /admin/approvals/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批实例ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除审批实例
+      tags:
+      - 审批实例
+  /admin/approvals/batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除审批实例
+      tags:
+      - 审批实例
+  /admin/cron_logs:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 日志ID
+        in: query
+        name: id
+        type: string
+      - description: 开始日期
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.CronLog'
+            type: array
+      summary: 获取定时任务日志列表
+      tags:
+      - 定时任务日志
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建日志请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.CronLog'
+      summary: 创建定时任务日志
+      tags:
+      - 定时任务日志
+  /admin/cron_logs/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 日志ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除定时任务日志
+      tags:
+      - 定时任务日志
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 日志ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.CronLog'
+      summary: 获取定时任务日志详情
+      tags:
+      - 定时任务日志
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 日志ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新日志请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新定时任务日志
+      tags:
+      - 定时任务日志
+  /admin/cron_logs/batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除定时任务日志
+      tags:
+      - 定时任务日志
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新定时任务日志状态
+      tags:
+      - 定时任务日志
+  /admin/crons:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 任务编码
+        in: query
+        name: code
+        type: string
+      - description: 开始日期
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Cron'
+            type: array
+      summary: 获取定时任务列表
+      tags:
+      - 定时任务
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建任务请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Cron'
+      summary: 创建定时任务
+      tags:
+      - 定时任务
+  /admin/crons/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除定时任务
+      tags:
+      - 定时任务
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Cron'
+      summary: 获取定时任务详情
+      tags:
+      - 定时任务
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新任务请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Cron'
+      summary: 更新定时任务
+      tags:
+      - 定时任务
+  /admin/crons/batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除定时任务
+      tags:
+      - 定时任务
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新定时任务状态
+      tags:
+      - 定时任务
+  /admin/field-type-groups:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: object
+            type: array
+      summary: 获取字段类型分组
+      tags:
+      - 表字段管理
+  /admin/field-type-presets:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: object
+            type: array
+      summary: 获取字段类型预设列表
+      tags:
+      - 表字段管理
+  /admin/permissions:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 权限编码
+        in: query
+        name: code
+        type: string
+      - description: 资源类型
+        in: query
+        name: resource
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Permission'
+            type: array
+      summary: 获取权限列表
+      tags:
+      - 权限管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建权限请求
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handler.CreatePermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Permission'
+      summary: 创建权限
+      tags:
+      - 权限管理
+  /admin/permissions/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 权限ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除权限
+      tags:
+      - 权限管理
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 权限ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Permission'
+      summary: 获取权限详情
+      tags:
+      - 权限管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 权限ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新权限请求
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handler.UpdatePermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Permission'
+      summary: 更新权限
+      tags:
+      - 权限管理
+  /admin/permissions/tree:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Permission'
+            type: array
+      summary: 获取权限树形结构
+      tags:
+      - 权限管理
+  /admin/roles:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 角色编码
+        in: query
+        name: code
+        type: string
+      - description: 开始日期
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Role'
+            type: array
+      summary: 获取角色列表
+      tags:
+      - 角色管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建角色请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Role'
+      summary: 创建角色
+      tags:
+      - 角色管理
+  /admin/roles/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除角色
+      tags:
+      - 角色管理
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Role'
+      summary: 获取角色详情
+      tags:
+      - 角色管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新角色请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Role'
+      summary: 更新角色
+      tags:
+      - 角色管理
+  /admin/roles/{id}/permissions:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 权限ID列表
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 移除角色的权限
+      tags:
+      - 角色管理
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Permission'
+            type: array
+      summary: 获取角色的权限列表
+      tags:
+      - 角色管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 权限ID列表
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 为角色分配权限
+      tags:
+      - 角色管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 权限ID列表
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新角色的权限
+      tags:
+      - 角色管理
+  /admin/roles/{id}/users:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.User'
+            type: array
+      summary: 获取角色的用户列表
+      tags:
+      - 角色管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 用户ID列表
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新角色的用户列表
+      tags:
+      - 角色管理
+  /admin/roles/batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除角色
+      tags:
+      - 角色管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新角色状态
+      tags:
+      - 角色管理
+  /admin/table/{table_code}/options:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 表编码
+        in: path
+        name: table_code
+        required: true
+        type: string
+      - description: 过滤条件(JSON格式)
+        in: query
+        name: filter
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: object
+            type: array
+      summary: 获取表的选项列表
+      tags:
+      - 表字段管理
+  /admin/table_approval_defs:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 实体编码
+        in: query
+        name: entity_code
+        required: true
+        type: string
+      - description: 操作类型
+        in: query
+        name: operation
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.TableApprovalDefinition'
+            type: array
+      summary: 获取表审批定义列表
+      tags:
+      - 表审批定义
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.TableApprovalDefinition'
+      summary: 创建表审批定义
+      tags:
+      - 表审批定义
+  /admin/table_approval_defs/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除表审批定义
+      tags:
+      - 表审批定义
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.TableApprovalDefinition'
+      summary: 获取表审批定义详情
+      tags:
+      - 表审批定义
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.TableApprovalDefinition'
+      summary: 更新表审批定义
+      tags:
+      - 表审批定义
+  /admin/table_approval_defs/batch_create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量创建请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量创建表审批定义
+      tags:
+      - 表审批定义
+  /admin/table_approval_defs/batch_delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除表审批定义
+      tags:
+      - 表审批定义
+  /admin/table_fields:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 表编码
+        in: query
+        name: table_code
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.TableField'
+            type: array
+      summary: 获取表字段列表
+      tags:
+      - 表字段管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.TableField'
+      summary: 创建表字段
+      tags:
+      - 表字段管理
+  /admin/table_fields/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 字段ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.TableField'
+      summary: 获取表字段详情
+      tags:
+      - 表字段管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 字段ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新表字段
+      tags:
+      - 表字段管理
+  /admin/table_fields/batch:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新表字段状态
+      tags:
+      - 表字段管理
+  /admin/table_fields/batch_delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除表字段
+      tags:
+      - 表字段管理
+  /admin/table_fields/fields:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 表编码
+        in: query
+        name: table_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.TableField'
+            type: array
+      summary: 获取表的所有字段
+      tags:
+      - 表字段管理
+  /admin/table_fields/public:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 发布请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 发布表结构
+      tags:
+      - 表字段管理
+  /admin/table_permissions:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色ID
+        in: query
+        name: role_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: object
+            type: array
+      summary: 获取角色的表权限列表
+      tags:
+      - 表权限管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 权限信息
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 授予表权限
+      tags:
+      - 表权限管理
+  /admin/table_permissions/batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除表权限
+      tags:
+      - 表权限管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新表权限状态
+      tags:
+      - 表权限管理
+  /admin/tables:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 表代码
+        in: query
+        name: code
+        type: string
+      - description: 开始日期
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期
+        in: query
+        name: endDate
+        type: string
+      - description: 关联关系
+        in: query
+        name: relation
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Table'
+            type: array
+      summary: 获取表列表
+      tags:
+      - 表管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 表信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_model.Table'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Table'
+      summary: 创建表
+      tags:
+      - 表管理
+  /admin/tables/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 表ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Table'
+      summary: 获取表详情
+      tags:
+      - 表管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 表ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 表信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_model.Table'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新表
+      tags:
+      - 表管理
+  /admin/tables/batch:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新表状态
+      tags:
+      - 表管理
+  /admin/tables/batch_delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除表
+      tags:
+      - 表管理
+  /admin/users:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.User'
+            type: array
+      summary: 获取用户列表
+      tags:
+      - 用户管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户信息
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.User'
+      summary: 创建用户
+      tags:
+      - 用户管理
+  /admin/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除用户
+      tags:
+      - 用户管理
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.User'
+      summary: 获取用户详情
+      tags:
+      - 用户管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 用户信息
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新用户
+      tags:
+      - 用户管理
+  /admin/users/{id}/roles:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Role'
+            type: array
+      summary: 获取用户角色
+      tags:
+      - 用户管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 角色ID列表
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新用户角色
+      tags:
+      - 用户管理
+  /admin/users/batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除用户
+      tags:
+      - 用户管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新用户状态
+      tags:
+      - 用户管理
+  /admin/webhook_deliveries:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 投递代码
+        in: query
+        name: deliveryCode
+        type: string
+      - description: 表代码
+        in: query
+        name: table_code
+        type: string
+      - description: 实体ID
+        in: query
+        name: entity_id
+        type: string
+      - description: 开始日期
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.WebhookDelivery'
+            type: array
+      summary: 获取Webhook投递记录列表
+      tags:
+      - Webhook投递记录
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 投递记录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.WebhookDelivery'
+      summary: 创建Webhook投递记录
+      tags:
+      - Webhook投递记录
+  /admin/webhook_deliveries/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 投递记录ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除Webhook投递记录
+      tags:
+      - Webhook投递记录
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 投递记录ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.WebhookDelivery'
+      summary: 获取Webhook投递记录详情
+      tags:
+      - Webhook投递记录
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 投递记录ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 投递记录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新Webhook投递记录
+      tags:
+      - Webhook投递记录
+  /admin/webhook_deliveries/batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除Webhook投递记录
+      tags:
+      - Webhook投递记录
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新Webhook投递记录
+      tags:
+      - Webhook投递记录
+  /admin/webhooks:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 表代码
+        in: query
+        name: tableCode
+        type: string
+      - description: 开始日期
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Webhook'
+            type: array
+      summary: 获取Webhook列表
+      tags:
+      - Webhook管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Webhook信息
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Webhook'
+      summary: 创建Webhook
+      tags:
+      - Webhook管理
+  /admin/webhooks/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: WebhookID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除Webhook
+      tags:
+      - Webhook管理
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: WebhookID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Webhook'
+      summary: 获取Webhook详情
+      tags:
+      - Webhook管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: WebhookID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Webhook信息
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新Webhook
+      tags:
+      - Webhook管理
+  /admin/webhooks/batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除Webhook
+      tags:
+      - Webhook管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新Webhook状态
+      tags:
+      - Webhook管理
+  /api/v1/approval-defs:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        maxLength: 128
+        name: code
+        type: string
+      - in: query
+        name: endDate
+        type: string
+      - in: query
+        maxLength: 128
+        name: name
+        type: string
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: startDate
+        type: string
+      - description: |-
+          EntityCode string `form:"entityCode" binding:"max=64" comment:"实体编码"`
+          Category   string `form:"category" binding:"max=64" comment:"分类"`
+        enum:
+        - Normal
+        - Frozen
+        - Deleted
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalDefinition'
+            type: array
+      summary: 获取审批定义列表
+      tags:
+      - 审批定义
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建审批定义请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.CreateApprovalDefRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalDefinition'
+      summary: 创建审批定义
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除审批定义
+      tags:
+      - 审批定义
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalDefinition'
+      summary: 获取审批定义详情
+      tags:
+      - 审批定义
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新审批定义请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.UpdateApprovalDefRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalDefinition'
+      summary: 更新审批定义
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/{id}/activate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 激活审批定义
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/{id}/deactivate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 停用审批定义
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/{id}/publish:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 发布审批定义
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/{id}/validate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 验证审批定义
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/{id}/versions:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 创建版本请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.CreateVersionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalDefinition'
+      summary: 创建审批定义新版本
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/code/{code}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义编码
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalDefinition'
+      summary: 根据编码获取审批定义
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/code/{code}/versions:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义编码
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalDefinition'
+            type: array
+      summary: 获取审批定义版本列表
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/entity/{entityCode}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 实体编码
+        in: path
+        name: entityCode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalDefinition'
+            type: array
+      summary: 根据实体编码获取审批定义列表
+      tags:
+      - 审批定义
+  /api/v1/approval-defs/entity/{entityCode}/active:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 实体编码
+        in: path
+        name: entityCode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalDefinition'
+            type: array
+      summary: 根据实体编码获取激活的审批定义列表
+      tags:
+      - 审批定义
+  /api/v1/approval-nodes:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义编码
+        in: query
+        name: approvalDefCode
+        type: string
+      - description: 节点类型
+        in: query
+        name: nodeType
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 页大小
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalNode'
+            type: array
+      summary: 获取审批节点列表
+      tags:
+      - 审批节点
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建审批节点请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.CreateApprovalNodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalNode'
+      summary: 创建审批节点
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批节点ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除审批节点
+      tags:
+      - 审批节点
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批节点ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalNode'
+      summary: 获取审批节点详情
+      tags:
+      - 审批节点
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批节点ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新审批节点请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.UpdateApprovalNodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalNode'
+      summary: 更新审批节点
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/{id}/activate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 节点ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 激活节点
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/{id}/configure-approvers:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 节点ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 审批人配置
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 配置审批人
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/{id}/configure-conditions:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 节点ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 条件配置
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 配置条件
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/{id}/configure-timeouts:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 节点ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 超时配置
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 配置超时
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/{id}/deactivate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 节点ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 停用节点
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/approval-def/{approvalDefCode}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义编码
+        in: path
+        name: approvalDefCode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalNode'
+            type: array
+      summary: 根据审批定义获取节点列表
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/approval-def/{approvalDefCode}/end:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义编码
+        in: path
+        name: approvalDefCode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalNode'
+            type: array
+      summary: 获取结束节点列表
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/approval-def/{approvalDefCode}/next/{currentNodeCode}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义编码
+        in: path
+        name: approvalDefCode
+        required: true
+        type: string
+      - description: 当前节点编码
+        in: path
+        name: currentNodeCode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalNode'
+            type: array
+      summary: 获取下一个节点列表
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/approval-def/{approvalDefCode}/start:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义编码
+        in: path
+        name: approvalDefCode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalNode'
+      summary: 获取开始节点
+      tags:
+      - 审批节点
+  /api/v1/approval-nodes/approval-def/{approvalDefCode}/validate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批定义编码
+        in: path
+        name: approvalDefCode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 验证工作流
+      tags:
+      - 审批节点
+  /api/v1/approval-tasks:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        maxLength: 128
+        name: approvalCode
+        type: string
+      - in: query
+        maxLength: 64
+        name: assigneeId
+        type: string
+      - in: query
+        name: endDate
+        type: string
+      - in: query
+        maxLength: 64
+        name: nodeCode
+        type: string
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: startDate
+        type: string
+      - enum:
+        - PENDING
+        - APPROVED
+        - REJECTED
+        - TRANSFERRED
+        - TIMEOUT
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+            type: array
+      summary: 获取审批任务列表
+      tags:
+      - 审批任务
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建审批任务请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+      summary: 创建审批任务
+      tags:
+      - 审批任务
+  /api/v1/approval-tasks/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除审批任务
+      tags:
+      - 审批任务
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+      summary: 获取审批任务详情
+      tags:
+      - 审批任务
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新审批任务请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+      summary: 更新审批任务
+      tags:
+      - 审批任务
+  /api/v1/approval-tasks/{id}/remind:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 催办审批任务
+      tags:
+      - 审批任务
+  /api/v1/approval-tasks/{id}/transfer:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 转交请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.TransferTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 转交审批任务
+      tags:
+      - 审批任务
+  /api/v1/approval-tasks/approval/{approvalCode}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批编码
+        in: path
+        name: approvalCode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+            type: array
+      summary: 根据审批实例获取任务列表
+      tags:
+      - 审批任务
+  /api/v1/approval-tasks/assignee/{assigneeId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批人ID
+        in: path
+        name: assigneeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+            type: array
+      summary: 根据审批人获取任务列表
+      tags:
+      - 审批任务
+  /api/v1/approval-tasks/assignee/{assigneeId}/pending:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批人ID
+        in: path
+        name: assigneeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+            type: array
+      summary: 根据审批人获取待处理任务列表
+      tags:
+      - 审批任务
+  /api/v1/approval-tasks/batch-remind:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量催办请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.BatchRemindRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量催办审批任务
+      tags:
+      - 审批任务
+  /api/v1/approval-tasks/expired:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+            type: array
+      summary: 获取过期任务列表
+      tags:
+      - 审批任务
+  /api/v1/approval-tasks/overdue:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.ApprovalTask'
+            type: array
+      summary: 获取逾期任务列表
+      tags:
+      - 审批任务
+  /api/v1/approvals:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        maxLength: 64
+        name: applicantId
+        type: string
+      - in: query
+        maxLength: 128
+        name: code
+        type: string
+      - in: query
+        name: endDate
+        type: string
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: pageSize
+        type: integer
+      - description: EntityCode  string `form:"entityCode" binding:"max=64" comment:"实体编码"`
+        enum:
+        - ALL
+        - MY_APPLY
+        - MY_APPROVE
+        - MY_CC
+        in: query
+        name: showType
+        type: string
+      - in: query
+        name: startDate
+        type: string
+      - enum:
+        - DRAFT
+        - PENDING
+        - APPROVED
+        - REJECTED
+        - CANCELLED
+        in: query
+        name: status
+        type: string
+      - in: query
+        maxLength: 255
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Approval'
+            type: array
+      summary: 获取审批实例列表
+      tags:
+      - 审批实例
+  /api/v1/approvals/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批实例ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Approval'
+      summary: 获取审批实例详情
+      tags:
+      - 审批实例
+  /api/v1/approvals/{id}/history:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批实例ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Approval'
+            type: array
+      summary: 获取审批历史
+      tags:
+      - 审批实例
+  /api/v1/approvals/applicant/{applicantId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 申请人ID
+        in: path
+        name: applicantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Approval'
+            type: array
+      summary: 根据申请人获取审批实例列表
+      tags:
+      - 审批实例
+  /api/v1/approvals/code/{code}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批编码
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Approval'
+      summary: 根据编码获取审批实例
+      tags:
+      - 审批实例
+  /api/v1/approvals/entity/{entityCode}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 实体编码
+        in: path
+        name: entityCode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Approval'
+            type: array
+      summary: 根据实体获取审批实例列表
+      tags:
+      - 审批实例
+  /api/v1/approvals/process:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 处理审批请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.ProcessApprovalRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 处理审批
+      tags:
+      - 审批实例
+  /api/v1/approvals/start:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 启动审批请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.StartApprovalRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.Approval'
+      summary: 启动审批流程
+      tags:
+      - 审批实例
+  /api/v1/approvals/statistics:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 申请人ID
+        in: query
+        name: applicantId
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              format: int64
+              type: integer
+            type: object
+      summary: 获取审批统计信息
+      tags:
+      - 审批实例
+  /api/v1/approvals/status/{status}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 审批状态
+        in: path
+        name: status
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/piemdm_internal_model.Approval'
+            type: array
+      summary: 根据状态获取审批实例列表
+      tags:
+      - 审批实例
+  /api/v1/notification_logs:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取通知日志列表
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 审批ID
+        in: query
+        name: approvalId
+        type: string
+      - description: 任务ID
+        in: query
+        name: taskId
+        type: string
+      - description: 接收人ID
+        in: query
+        name: recipientId
+        type: string
+      - description: 通知类型
+        in: query
+        name: notificationType
+        type: string
+      - description: 发送状态
+        in: query
+        name: status
+        type: string
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 结束时间
+        in: query
+        name: endTime
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 获取通知日志列表
+      tags:
+      - 通知日志管理
+  /api/v1/notification_logs/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 根据ID获取通知日志详情
+      parameters:
+      - description: 日志ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.NotificationLog'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 获取通知日志详情
+      tags:
+      - 通知日志管理
+  /api/v1/notification_templates:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取通知模板列表
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 15
+        description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 模板类型
+        in: query
+        name: templateType
+        type: string
+      - description: 通知类型
+        in: query
+        name: notificationType
+        type: string
+      - description: 关键词搜索
+        in: query
+        name: keyword
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 获取通知模板列表
+      tags:
+      - 通知模板管理
+    post:
+      consumes:
+      - application/json
+      description: 创建新的通知模板
+      parameters:
+      - description: 模板信息
+        in: body
+        name: template
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_service.CreateNotificationTemplateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.NotificationTemplate'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 创建通知模板
+      tags:
+      - 通知模板管理
+  /api/v1/notification_templates/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除指定的通知模板
+      parameters:
+      - description: 模板ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      tags:
+      - 通知模板管理
+    get:
+      consumes:
+      - application/json
+      description: 根据ID获取通知模板详情
+      parameters:
+      - description: 模板ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.NotificationTemplate'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 获取通知模板详情
+      tags:
+      - 通知模板管理
+    put:
+      consumes:
+      - application/json
+      description: 更新指定的通知模板
+      parameters:
+      - description: 模板ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 模板信息
+        in: body
+        name: template
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_service.UpdateNotificationTemplateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/piemdm_internal_model.NotificationTemplate'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 更新通知模板
+      tags:
+      - 通知模板管理
+  /api/v1/notification_templates/{id}/render:
+    post:
+      consumes:
+      - application/json
+      description: 使用变量渲染通知模板
+      parameters:
+      - description: 模板ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 模板变量
+        in: body
+        name: variables
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 渲染通知模板
+      tags:
+      - 通知模板管理
+  /api/v1/notification_templates/batch:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新通知模板状态
+      tags:
+      - 通知模板管理
+  /api/v1/notification_templates/validate:
+    post:
+      consumes:
+      - application/json
+      description: 验证通知模板的语法和格式
+      parameters:
+      - description: 模板内容
+        in: body
+        name: template
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_service.ValidateTemplateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 验证通知模板
+      tags:
+      - 通知模板管理
+  /api/v1/notifications/approval:
+    post:
+      consumes:
+      - application/json
+      description: 发送审批相关的通知
+      parameters:
+      - description: 通知信息
+        in: body
+        name: notification
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_service.ApprovalNotificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 发送审批通知
+      tags:
+      - 通知管理
+  /api/v1/notifications/batch:
+    post:
+      consumes:
+      - application/json
+      description: 批量发送多个通知
+      parameters:
+      - description: 通知列表
+        in: body
+        name: notifications
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/piemdm_internal_service.ApprovalNotificationRequest'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 批量发送通知
+      tags:
+      - 通知管理
+  /api/v1/notifications/process-pending:
+    post:
+      consumes:
+      - application/json
+      description: 手动触发处理待发送的通知
+      parameters:
+      - default: 100
+        description: 处理数量限制
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 处理待发送通知
+      tags:
+      - 通知管理
+  /api/v1/notifications/retry-failed:
+    post:
+      consumes:
+      - application/json
+      description: 处理重试发送失败的通知
+      parameters:
+      - default: 50
+        description: 重试数量限制
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 处理重试通知
+      tags:
+      - 通知管理
+  /api/v1/notifications/statistics:
+    get:
+      consumes:
+      - application/json
+      description: 获取通知发送统计信息
+      parameters:
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 结束时间
+        in: query
+        name: endTime
+        type: string
+      - description: 分组方式
+        enum:
+        - day
+        - week
+        - month
+        in: query
+        name: groupBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 获取通知统计
+      tags:
+      - 通知管理
+  /api/v1/notifications/template:
+    post:
+      consumes:
+      - application/json
+      description: 使用指定模板发送通知
+      parameters:
+      - description: 模板通知信息
+        in: body
+        name: notification
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_service.TemplateNotificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 使用模板发送通知
+      tags:
+      - 通知管理
+  /api/v1/notifications/test:
+    post:
+      consumes:
+      - application/json
+      description: 测试通知渠道是否正常工作
+      parameters:
+      - description: 测试信息
+        in: body
+        name: test
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_service.TestNotificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 测试通知
+      tags:
+      - 通知管理
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 登录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/piemdm_internal_pkg_request.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 用户登录
+      tags:
+      - 用户管理
+  /auth/validate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 验证Token
+      tags:
+      - 用户管理
+  /openapi/v1/entities/{table}:
+    get:
+      consumes:
+      - application/json
+      description: 通过 OpenAPI 查询指定实体的列表数据
+      parameters:
+      - description: 实体表名
+        in: path
+        name: table
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 查询实体列表 (OpenAPI)
+      tags:
+      - OpenAPI
+  /openapi/v1/entities/{table}/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 通过 OpenAPI 查询指定实体的详情数据
+      parameters:
+      - description: 实体表名
+        in: path
+        name: table
+        required: true
+        type: string
+      - description: 记录 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 查询实体详情 (OpenAPI)
+      tags:
+      - OpenAPI
+schemes:
+- http
+- https
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,61 @@
+
+services:
+  # Backend API (Development with hot reload)
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.dev
+    platform: linux/arm64
+    container_name: piemdm-backend-dev
+    restart: unless-stopped
+    environment:
+      - APP_ENV=development
+      # 外部数据库连接配置 (需通过环境变量注入)
+      - DATA_MYSQL_DSN=${DATA_MYSQL_DSN}
+      - DATA_REDIS_ADDR=${DATA_REDIS_ADDR}
+      - DATA_REDIS_PASSWORD=${DATA_REDIS_PASSWORD}
+      - SECURITY_JWT_KEY=${JWT_SECRET:-your_jwt_secret_key}
+    ports:
+      - "${API_PORT:-8787}:8787"
+    volumes:
+      # Mount source code for hot reload
+      - ../backend:/app
+      # Exclude vendor and bin
+      - /app/bin
+    networks:
+      - piemdm-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8787/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend Web (Development with HMR)
+  frontend:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile.dev
+    platform: linux/arm64
+    container_name: piemdm-frontend-dev
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-5173}:5173"
+    depends_on:
+      - backend
+    volumes:
+      # Mount source code for HMR
+      - ../frontend:/app/frontend
+      - ../packages/workflow-vue:/app/packages/workflow-vue
+      # Exclude node_modules (preserve container's)
+      - /app/node_modules
+      - /app/frontend/node_modules
+    environment:
+      - VITE_API_BASE_URL=http://localhost:${API_PORT:-8787}
+      - VITE_PORT=5173
+      - VITE_HOST=0.0.0.0
+    networks:
+      - piemdm-network
+
+networks:
+  piemdm-network:
+    driver: bridge

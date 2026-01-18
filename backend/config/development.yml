@@ -1,0 +1,114 @@
+env: local
+app:
+  name: "piemdm"
+  #run-mode:debug/release
+  # run-mode: debug
+  page-size: 15
+  # log-path: ../log/debug.log
+  # identity-key: idname
+  # # Main domain, used for setting cookies
+  # session-cookie-domain: .127.0.0.1
+  # # Session expiration time, unit: days
+  # session-expire-time: 3
+  # session-cookie-name: sessionid
+  # session-redis-prefix: session_
+  export-save-path: export/
+  prefix-url:
+  runtime-root-path:
+http:
+  port: 8787
+security:
+  api_sign:
+    app_key: 123456
+    app_security: 123456
+  jwt:
+    key: your_jwt_secret_key
+data:
+  mysql:
+    dsn: root:password@tcp(127.0.0.1:3306)/piemdm?charset=utf8mb4&parseTime=True&loc=Local
+    # table_prefix: tbl_ deprecated
+    max_conn: 10
+    max_open: 100
+  redis:
+    addr: 127.0.0.1:6379
+    password: ""
+    db: 0
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+
+log:
+  # Production Deployment: /var/log/piemdm/server.log
+  # Development/Testing: /logs under project root directory
+  log_path: "../logs"
+  log_file_name: "server.log"
+  log_level: debug
+  encoding: console # json or console
+  max_backups: 30
+  max_age: 7
+  max_size: 1024
+  compress: true
+
+# Notification Service Configuration
+notification:
+  # Email Service Configuration
+  email:
+    enabled: true
+    host: "smtp.qq.com"
+    port: 465
+    username: "your_email@example.com"
+    password: "your_email_password"
+    from: "your_email@example.com"
+    from_name: "PieMDM System"
+    use_tls: true
+
+  # SMS Service Configuration
+  sms:
+    enabled: false
+    provider: "aliyun" # aliyun, tencent, custom
+    aliyun:
+      access_key_id: "your-access-key-id"
+      access_key_secret: "your-access-key-secret"
+      sign_name: "PieMDM"
+      template_code: "SMS_123456789"
+    tencent:
+      secret_id: "your-secret-id"
+      secret_key: "your-secret-key"
+      sms_sdk_app_id: "your-sdk-app-id"
+      sign_name: "PieMDM"
+      template_id: "123456"
+    custom:
+      api_url: "https://your-sms-api.com/send"
+      api_key: "your-api-key"
+      method: "POST"
+
+  # Feishu Message Configuration
+  feishu:
+    enabled: false
+    app_id: "your-feishu-app-id"
+    app_secret: "your-feishu-app-secret"
+    webhook_url: "https://open.feishu.cn/open-apis/bot/v2/hook/your-webhook-key"
+
+  # DingTalk Message Configuration
+  dingtalk:
+    enabled: false
+    app_key: "your-dingtalk-app-key"
+    app_secret: "your-dingtalk-app-secret"
+    webhook_url: "https://oapi.dingtalk.com/robot/send?access_token=your-access-token"
+
+  # Custom Notification Interface Configuration
+  custom:
+    enabled: false
+    endpoints:
+      - name: "webhook1"
+        url: "https://your-custom-api.com/notify"
+        method: "POST"
+        headers:
+          Authorization: "Bearer your-token"
+          Content-Type: "application/json"
+        timeout: 30s
+      - name: "webhook2"
+        url: "https://another-api.com/notify"
+        method: "POST"
+        headers:
+          X-API-Key: "your-api-key"
+        timeout: 30s

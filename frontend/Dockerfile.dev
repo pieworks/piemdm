@@ -1,0 +1,28 @@
+FROM --platform=linux/arm64 node:20-alpine
+
+# Set working directory to root
+WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Copy workspace config and lockfile
+COPY pnpm-workspace.yaml pnpm-lock.yaml ./
+
+# Copy shared packages
+COPY packages/workflow-vue ./packages/workflow-vue
+
+# Copy frontend package config
+COPY frontend/package.json ./frontend/
+
+# Install dependencies from root
+RUN pnpm install --frozen-lockfile
+
+# Expose Vite dev server port
+EXPOSE 5173
+
+# Set working directory to frontend
+WORKDIR /app/frontend
+
+# Start Vite dev server
+CMD ["pnpm", "dev", "--host", "0.0.0.0"]
