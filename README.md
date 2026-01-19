@@ -23,7 +23,7 @@ PieMDM is a powerful and user-friendly open-source Master Data Management (MDM) 
 
 ## 📋 Requirements
 
-- Go 1.24.11+
+- Go 1.24.12+
 - Node.js 20+
 - MySQL 8.0+
 - Redis 6+

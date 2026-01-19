@@ -34,7 +34,7 @@ Thank you for your interest in contributing to PieMDM! This document provides gu
 
 ### Prerequisites
 
-- Go 1.24.11+
+- Go 1.24.12+
 - Node.js 18+
 - MySQL 8.0+
 - Redis 6+

@@ -23,7 +23,7 @@ PieMDM là một hệ thống Quản lý Dữ liệu Chủ (MDM) mã nguồn m�
 
 ## 📋 Yêu cầu
 
-- Go 1.24.11+
+- Go 1.24.12+
 - Node.js 20+
 - MySQL 8.0+
 - Redis 6+

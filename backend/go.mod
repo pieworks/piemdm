@@ -1,6 +1,6 @@
 module piemdm
 
-go 1.24.11
+go 1.24.12
 
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
