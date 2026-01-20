@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /guide/getting-started
+      link: /zh-CN/guide/getting-started
     - theme: alt
       text: API 参考
-      link: /reference/api
+      link: /zh-CN/reference/api
 
 features:
   - title: 现代技术栈

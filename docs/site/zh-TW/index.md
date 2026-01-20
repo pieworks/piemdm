@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: 快速開始
-      link: /guide/getting-started
+      link: /zh-TW/guide/getting-started
     - theme: alt
       text: API 參考
-      link: /reference/api
+      link: /zh-TW/reference/api
 
 features:
   - title: 現代技術棧

@@ -39,7 +39,7 @@ export default defineConfig({
             themeConfig: {
                 nav: [
                     { text: '指南', link: '/zh-CN/guide/getting-started' },
-                    { text: '参考', link: '/reference/api' }
+                    { text: '参考', link: '/zh-CN/reference/api' }
                 ],
                 sidebar: [
                     {
@@ -51,7 +51,7 @@ export default defineConfig({
                     {
                         text: '参考',
                         items: [
-                            { text: 'API 参考', link: '/reference/api' }
+                            { text: 'API 参考', link: '/zh-CN/reference/api' }
                         ]
                     }
                 ]
@@ -64,7 +64,7 @@ export default defineConfig({
             themeConfig: {
                 nav: [
                     { text: '指南', link: '/zh-TW/guide/getting-started' },
-                    { text: '參考', link: '/reference/api' }
+                    { text: '參考', link: '/zh-TW/reference/api' }
                 ],
                 sidebar: [
                     {
@@ -76,7 +76,7 @@ export default defineConfig({
                     {
                         text: '參考',
                         items: [
-                            { text: 'API 參考', link: '/reference/api' }
+                            { text: 'API 參考', link: '/zh-TW/reference/api' }
                         ]
                     }
                 ]
