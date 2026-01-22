@@ -12,6 +12,8 @@ import (
 	"piemdm/pkg/log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/piemdm/openapi-go/errors"
+	"github.com/piemdm/openapi-go/spec"
 	"github.com/spf13/viper"
 )
 
@@ -22,14 +24,15 @@ func CanonicalRequestMiddleware(
 	conf *viper.Viper,
 ) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		appId := c.GetHeader("X-App-Id")
-		timestamp := c.GetHeader("X-Timestamp")
-		nonce := c.GetHeader("X-Nonce")
-		sign := c.GetHeader("X-Sign")
+		appId := c.GetHeader(spec.HeaderAppID)
+		timestamp := c.GetHeader(spec.HeaderTimestamp)
+		nonce := c.GetHeader(spec.HeaderNonce)
+		sign := c.GetHeader(spec.HeaderSignature)
 
 		if appId == "" || timestamp == "" || nonce == "" || sign == "" {
 			logger.Warn("Missing required headers")
-			resp.HandleError(c, http.StatusUnauthorized, "AUTH_FAILED: missing required headers (X-App-Id, X-Timestamp, X-Nonce, X-Sign)", nil)
+			// 使用标准错误码
+			resp.HandleError(c, errors.ErrAuthFailed.HTTPStatus(), errors.ErrAuthFailed.Error(), nil)
 			c.Abort()
 			return
 		}
@@ -43,7 +46,13 @@ func CanonicalRequestMiddleware(
 		app, err := authService.VerifySignature(c, appId, timestamp, nonce, sign, body)
 		if err != nil {
 			logger.Warn("Signature verification failed", "error", err, "app_id", appId)
-			resp.HandleError(c, http.StatusUnauthorized, err.Error(), nil)
+			// err 已经是 errors.ErrorCode 类型 (由 service 返回)
+			// resp.HandleError 可能需要适配，这里直接传递err.Error()保持兼容，或者解析Code
+			status := http.StatusUnauthorized
+			if e, ok := err.(errors.ErrorCode); ok {
+				status = e.HTTPStatus()
+			}
+			resp.HandleError(c, status, err.Error(), nil)
 			c.Abort()
 			return
 		}
@@ -51,7 +60,11 @@ func CanonicalRequestMiddleware(
 		clientIP := c.ClientIP()
 		if err := authService.VerifyIPWhitelist(app, clientIP); err != nil {
 			logger.Warn("IP whitelist check failed", "error", err, "app_id", appId, "client_ip", clientIP)
-			resp.HandleError(c, http.StatusForbidden, err.Error(), nil)
+			status := http.StatusForbidden
+			if e, ok := err.(errors.ErrorCode); ok {
+				status = e.HTTPStatus()
+			}
+			resp.HandleError(c, status, err.Error(), nil)
 			c.Abort()
 			return
 		}
@@ -59,7 +72,11 @@ func CanonicalRequestMiddleware(
 		nonceTTL := getNonceTTL(conf)
 		if err := authService.CheckAndRecordNonce(nonce, nonceTTL); err != nil {
 			logger.Warn("Nonce check failed", "error", err, "nonce", nonce)
-			resp.HandleError(c, http.StatusUnauthorized, err.Error(), nil)
+			status := http.StatusUnauthorized
+			if e, ok := err.(errors.ErrorCode); ok {
+				status = e.HTTPStatus()
+			}
+			resp.HandleError(c, status, err.Error(), nil)
 			c.Abort()
 			return
 		}
@@ -74,7 +91,7 @@ func CanonicalRequestMiddleware(
 func getNonceTTL(conf *viper.Viper) time.Duration {
 	ttlMinutes := conf.GetInt("openapi.nonce_ttl_minutes")
 	if ttlMinutes == 0 {
-		ttlMinutes = 10
+		return spec.DefaultNonceTTL
 	}
 	return time.Duration(ttlMinutes) * time.Minute
 }
@@ -88,7 +105,7 @@ func OpenApiEntityPermissionMiddleware(
 		app, exists := c.Get("application")
 		if !exists {
 			logger.Error("Application not found in context")
-			resp.HandleError(c, http.StatusUnauthorized, "AUTH_FAILED: application not found", nil)
+			resp.HandleError(c, errors.ErrAuthFailed.HTTPStatus(), errors.ErrAuthFailed.Error(), nil)
 			c.Abort()
 			return
 		}
@@ -96,21 +113,25 @@ func OpenApiEntityPermissionMiddleware(
 		application, ok := app.(*model.Application)
 		if !ok {
 			logger.Error("Invalid application type in context")
-			resp.HandleError(c, http.StatusInternalServerError, "SYSTEM_INTERNAL_ERROR", nil)
+			resp.HandleError(c, errors.ErrSystemError.HTTPStatus(), errors.ErrSystemError.Error(), nil)
 			c.Abort()
 			return
 		}
 
 		tableCode := c.Param("table")
 		if tableCode == "" {
-			resp.HandleError(c, http.StatusBadRequest, "PARAM_REQUIRED_MISSING: table is required", nil)
+			resp.HandleError(c, errors.ErrParamMissing.HTTPStatus(), errors.ErrParamMissing.Error(), nil)
 			c.Abort()
 			return
 		}
 
 		if err := authService.VerifyEntityAccess(application.AppId, tableCode); err != nil {
 			logger.Warn("Entity access denied", "app_id", application.AppId, "table", tableCode, "error", err)
-			resp.HandleError(c, http.StatusForbidden, err.Error(), nil)
+			status := http.StatusForbidden
+			if e, ok := err.(errors.ErrorCode); ok {
+				status = e.HTTPStatus()
+			}
+			resp.HandleError(c, status, err.Error(), nil)
 			c.Abort()
 			return
 		}

@@ -3,8 +3,8 @@ services:
   # Backend API
   backend:
     build:
-      context: ../backend
-      dockerfile: scripts/build/Dockerfile
+      context: ..
+      dockerfile: backend/Dockerfile
     container_name: piemdm-backend
     restart: unless-stopped
     environment:

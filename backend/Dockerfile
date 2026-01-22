@@ -4,17 +4,24 @@ FROM golang:1.24.12-alpine AS builder
 # Install build dependencies
 RUN apk add --no-cache git ca-certificates tzdata
 
-# Set working directory
-WORKDIR /app
+# Set working directory to root
+WORKDIR /workspace
 
-# Copy go mod files
-COPY go.mod go.sum ./
+# Copy go.work and module files
+COPY go.work go.work.sum* ./
+COPY backend/go.mod backend/go.sum ./backend/
+COPY shared/openapi-go/go.mod shared/openapi-go/go.sum* ./shared/openapi-go/
 
 # Download dependencies
-RUN go mod download
+# Need to be in the respective module directories or use go work sync
+RUN go mod download -C backend && go mod download -C shared/openapi-go
 
 # Copy source code
-COPY . .
+COPY backend ./backend
+COPY shared ./shared
+
+# Build the application
+WORKDIR /workspace/backend
 
 # Build the application
 # Use automatic architecture detection or provided ARG
