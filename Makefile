@@ -49,8 +49,8 @@ test-frontend:
 # Build all production images
 build-all:
 	@echo "🏗️  Building production images..."
-	docker build -t piemdm-backend:latest ./backend
-	docker build -t piemdm-frontend:latest ./frontend
+	docker build -f backend/Dockerfile -t piemdm-backend:latest .
+	docker build -f frontend/Dockerfile -t piemdm-frontend:latest .
 	@echo "✅ Build complete"
 
 # Clean up environment
