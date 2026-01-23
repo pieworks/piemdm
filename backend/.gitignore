@@ -21,8 +21,8 @@ pkg/mod/
 pkg/sumdb/
 
 # Go workspace file
-go.work
-go.work.sum
+# go.work - Commented out because this project uses Go workspace and needs these files in the repo
+# go.work.sum
 
 # env file
 .env

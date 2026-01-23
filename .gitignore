@@ -179,7 +179,7 @@ backend/server
 # vendor/
 
 # Go workspace file
-go.work
+# go.work - Commented out because this project uses Go workspace and needs these files in the repo
 
 ### AI Tools ###
 .ai/
