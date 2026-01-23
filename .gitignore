@@ -198,7 +198,9 @@ backend/logs/
 **/skills/
 
 # Generated API Client
-packages/web/api-client/
+packages/web/api-client/*
+!packages/web/api-client/package.json
+!packages/web/api-client/tsconfig.json
 !packages/web/api-client/.gitkeep
 
 
