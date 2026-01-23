@@ -10,14 +10,14 @@ WORKDIR /workspace
 # Copy go.work and module files
 COPY go.work go.work.sum* ./
 COPY backend/go.mod backend/go.sum ./backend/
-COPY packages/go/openapi/go.mod packages/go/openapi/go.work.sum* ./packages/go/openapi/
+COPY packages/go/openapi/go.mod packages/go/openapi/go.sum ./packages/go/openapi/
 
-# Download dependencies
-# Need to be in the respective module directories or use go work sync
-RUN go mod download -C backend && go mod download -C packages/go/openapi
+# Download dependencies using workspace
+RUN go work sync && go mod download -C backend && go mod download -C packages/go/openapi
 
 # Copy source code
 COPY backend ./backend
+RUN ls -laR packages || echo "packages missing in context"
 COPY packages/go/openapi ./packages/go/openapi
 
 
@@ -50,8 +50,8 @@ RUN addgroup -g 1001 -S app && \
 WORKDIR /app
 
 # Copy binary and config from builder
-COPY --from=builder /app/bin/server .
-COPY --from=builder /app/config ./config
+COPY --from=builder /workspace/backend/bin/server .
+COPY --from=builder /workspace/backend/config ./config
 
 # Create necessary directories
 RUN mkdir -p storage/logs export uploads && \
