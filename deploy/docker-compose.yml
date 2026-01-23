@@ -41,8 +41,8 @@ services:
   # Frontend Web
   frontend:
     build:
-      context: ../frontend
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: frontend/Dockerfile
     container_name: piemdm-frontend
     restart: unless-stopped
     ports:
