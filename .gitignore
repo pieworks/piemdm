@@ -197,5 +197,9 @@ backend/logs/
 **/AGENTS.md
 **/skills/
 
+# Generated API Client
+packages/web/api-client/
+!packages/web/api-client/.gitkeep
+
 
 
