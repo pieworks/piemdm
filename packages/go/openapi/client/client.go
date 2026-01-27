@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/pieworks/piemdm/packages/go/openapi/auth"
-	"github.com/pieworks/piemdm/packages/go/openapi/spec"
+	"github.com/pieteams/piemdm/packages/go/openapi/auth"
+	"github.com/pieteams/piemdm/packages/go/openapi/spec"
 )
 
 // Client OpenAPI 客户端

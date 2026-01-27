@@ -1,4 +1,4 @@
-module github.com/pieworks/piemdm/packages/go/openapi
+module github.com/pieteams/piemdm/packages/go/openapi
 
 go 1.24.12
 

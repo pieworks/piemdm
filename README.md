@@ -1,6 +1,6 @@
 # PieMDM - Enterprise Master Data Management System
 
-[![CI](https://github.com/pieworks/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieworks/piemdm/actions/workflows/ci.yml)
+[![CI](https://github.com/pieteams/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieteams/piemdm/actions/workflows/ci.yml)
 
 **English**
 | [简体中文](docs/readme/README_zh-CN.md)
@@ -12,7 +12,7 @@
 
 PieMDM is a powerful and user-friendly open-source Master Data Management (MDM) system designed for enterprise data governance. Built with Go backend and Vue.js frontend, it provides comprehensive data management, governance, and integration capabilities.
 
-**Project Website**: https://pieworks.github.io/piemdm/
+**Project Website**: https://pieteams.github.io/piemdm/
 
 ## 🚀 Features
 
@@ -35,7 +35,7 @@ PieMDM is a powerful and user-friendly open-source Master Data Management (MDM) 
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/pieworks/piemdm.git
+git clone https://github.com/pieteams/piemdm.git
 cd piemdm
 ```
 
@@ -216,8 +216,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 - 📧 Email: [jasen215@gmail.com]
-- 🐛 Issues: [GitHub Issues](https://github.com/pieworks/piemdm/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/pieworks/piemdm/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/pieteams/piemdm/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/pieteams/piemdm/discussions)
 
 ## 🙏 Acknowledgments
 

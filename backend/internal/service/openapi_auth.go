@@ -11,9 +11,9 @@ import (
 	"piemdm/pkg/log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/pieworks/piemdm/packages/go/openapi/auth"
-	"github.com/pieworks/piemdm/packages/go/openapi/errors"
-	"github.com/pieworks/piemdm/packages/go/openapi/spec"
+	"github.com/pieteams/piemdm/packages/go/openapi/auth"
+	"github.com/pieteams/piemdm/packages/go/openapi/errors"
+	"github.com/pieteams/piemdm/packages/go/openapi/spec"
 	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"
 )

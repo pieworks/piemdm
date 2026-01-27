@@ -141,8 +141,8 @@ Applicable for **MDM platform selection, technical benchmarking, solution design
 
 ### 5. PieMDM
 
-* **Website / Repo**: [https://github.com/pieworks/piemdm](https://github.com/pieworks/piemdm)
-* **Project Site**: [https://pieworks.github.io/piemdm/](https://pieworks.github.io/piemdm/)
+* **Website / Repo**: [https://github.com/pieteams/piemdm](https://github.com/pieteams/piemdm)
+* **Project Site**: [https://pieteams.github.io/piemdm/](https://pieteams.github.io/piemdm/)
 * **License**: MIT Open Source
 * **Type**: Open Source Enterprise MDM System
 * **Tech Stack**: Go Backend + Vue Frontend

@@ -16,7 +16,7 @@
 > [!TIP]
 > **關於 Go 獲取方式**：
 > 如果您在 PieMDM 相關的 Monorepo 中進行開發，推薦使用 Go Modules 方式直接引用：
-> `go get github.com/pieworks/piemdm/packages/go/openapi`
+> `go get github.com/pieteams/piemdm/packages/go/openapi`
 
 ---
 

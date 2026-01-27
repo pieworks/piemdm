@@ -1,6 +1,6 @@
 # PieMDM - 엔터프라이즈 마스터 데이터 관리 시스템
 
-[![CI](https://github.com/pieworks/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieworks/piemdm/actions/workflows/ci.yml)
+[![CI](https://github.com/pieteams/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieteams/piemdm/actions/workflows/ci.yml)
 
 [English](../../README.md)
 | [简体中文](README_zh-CN.md)
@@ -12,7 +12,7 @@
 
 PieMDM은 엔터프라이즈 데이터 거버넌스를 위해 설계된 강력하고 사용자 친화적인 오픈 소스 마스터 데이터 관리(MDM) 시스템입니다. Go 백엔드와 Vue.js 프론트엔드로 구축되어 포괄적인 데이터 관리, 거버넌스 및 통합 기능을 제공합니다.
 
-**프로젝트 웹사이트**: https://pieworks.github.io/piemdm/
+**프로젝트 웹사이트**: https://pieteams.github.io/piemdm/
 
 ## 🚀 주요 기능
 
@@ -35,7 +35,7 @@ PieMDM은 엔터프라이즈 데이터 거버넌스를 위해 설계된 강력�
 ### 1. 저장소 클론
 
 ```bash
-git clone https://github.com/pieworks/piemdm.git
+git clone https://github.com/pieteams/piemdm.git
 cd piemdm
 ```
 
@@ -217,8 +217,8 @@ pnpm build
 ## 📞 지원
 
 - 📧 이메일: [jasen215@gmail.com]
-- 🐛 이슈: [GitHub Issues](https://github.com/pieworks/piemdm/issues)
-- 💬 토론: [GitHub Discussions](https://github.com/pieworks/piemdm/discussions)
+- 🐛 이슈: [GitHub Issues](https://github.com/pieteams/piemdm/issues)
+- 💬 토론: [GitHub Discussions](https://github.com/pieteams/piemdm/discussions)
 
 ## 🙏 감사의 말
 

@@ -141,8 +141,8 @@
 
 ### 5. PieMDM
 
-* **官網 / 項目地址**：[https://github.com/pieworks/piemdm](https://github.com/pieworks/piemdm)
-* **項目網站**：[https://pieworks.github.io/piemdm/](https://pieworks.github.io/piemdm/)
+* **官網 / 項目地址**：[https://github.com/pieteams/piemdm](https://github.com/pieteams/piemdm)
+* **項目網站**：[https://pieteams.github.io/piemdm/](https://pieteams.github.io/piemdm/)
 * **授權**：MIT 開源許可
 * **類型**：開源企業級 MDM 系統
 * **技術棧**：Go 後端 + Vue 前端

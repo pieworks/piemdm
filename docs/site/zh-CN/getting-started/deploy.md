@@ -16,7 +16,7 @@ PieMDM 旨在通过容器化技术轻松部署。我们推荐使用 Docker Compo
    将项目代码克隆到服务器：
 
    ```bash
-   git clone https://github.com/pieworks/piemdm.git
+   git clone https://github.com/pieteams/piemdm.git
    cd piemdm
    ```
 

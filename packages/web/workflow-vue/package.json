@@ -16,12 +16,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pieworks/piemdm.git",
+    "url": "https://github.com/pieteams/piemdm.git",
     "directory": "packages/workflow-vue"
   },
-  "homepage": "https://github.com/pieworks/piemdm/tree/main/packages/workflow-vue#readme",
+  "homepage": "https://github.com/pieteams/piemdm/tree/main/packages/workflow-vue#readme",
   "bugs": {
-    "url": "https://github.com/pieworks/piemdm/issues"
+    "url": "https://github.com/pieteams/piemdm/issues"
   },
   "exports": {
     ".": {

@@ -16,7 +16,7 @@ The deployment environment requires:
    Clone the project code to the server:
 
    ```bash
-   git clone https://github.com/pieworks/piemdm.git
+   git clone https://github.com/pieteams/piemdm.git
    cd piemdm
    ```
 

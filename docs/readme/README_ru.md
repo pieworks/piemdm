@@ -1,6 +1,6 @@
 # PieMDM - Корпоративная система управления основными данными
 
-[![CI](https://github.com/pieworks/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieworks/piemdm/actions/workflows/ci.yml)
+[![CI](https://github.com/pieteams/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieteams/piemdm/actions/workflows/ci.yml)
 
 [English](../../README.md)
 | [简体中文](README_zh-CN.md)
@@ -12,7 +12,7 @@
 
 PieMDM — это мощная и удобная система управления основными данными (MDM) с открытым исходным кодом, разработанная для корпоративного управления данными. Построенная на бэкенде Go и фронтенде Vue.js, она предоставляет комплексные возможности управления данными, контроля и интеграции.
 
-**Веб-сайт проекта**: https://pieworks.github.io/piemdm/
+**Веб-сайт проекта**: https://pieteams.github.io/piemdm/
 
 ## 🚀 Возможности
 
@@ -35,7 +35,7 @@ PieMDM — это мощная и удобная система управлен
 ### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/pieworks/piemdm.git
+git clone https://github.com/pieteams/piemdm.git
 cd piemdm
 ```
 
@@ -217,8 +217,8 @@ pnpm build
 ## 📞 Поддержка
 
 - 📧 Email: [jasen215@gmail.com]
-- 🐛 Issues: [GitHub Issues](https://github.com/pieworks/piemdm/issues)
-- 💬 Обсуждения: [GitHub Discussions](https://github.com/pieworks/piemdm/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/pieteams/piemdm/issues)
+- 💬 Обсуждения: [GitHub Discussions](https://github.com/pieteams/piemdm/discussions)
 
 ## 🙏 Благодарности
 

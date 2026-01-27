@@ -171,8 +171,8 @@
 
 ### 5. PieMDM
 
-* **官网 / 项目地址**：[https://github.com/pieworks/piemdm](https://github.com/pieworks/piemdm)
-* **项目网站**：[https://pieworks.github.io/piemdm/](https://pieworks.github.io/piemdm/)
+* **官网 / 项目地址**：[https://github.com/pieteams/piemdm](https://github.com/pieteams/piemdm)
+* **项目网站**：[https://pieteams.github.io/piemdm/](https://pieteams.github.io/piemdm/)
 * **授权**：MIT 开源许可
 * **类型**：开源企业级 MDM 系统
 * **技术栈**：Go 后端 + Vue 前端

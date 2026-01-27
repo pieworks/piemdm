@@ -1,6 +1,6 @@
 # PieMDM - 企業級主數據管理系統
 
-[![CI](https://github.com/pieworks/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieworks/piemdm/actions/workflows/ci.yml)
+[![CI](https://github.com/pieteams/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieteams/piemdm/actions/workflows/ci.yml)
 
 [English](../../README.md)
 | [简体中文](README_zh-CN.md)
@@ -12,7 +12,7 @@
 
 PieMDM 是一款功能強大且易於使用的開源主數據管理 (MDM) 系統，專為企業數據治理而設計。基於 Go 後端和 Vue.js 前端構建，提供全面的數據管理、治理和集成能力。
 
-**專案官網**: https://pieworks.github.io/piemdm/
+**專案官網**: https://pieteams.github.io/piemdm/
 
 ## 🚀 功能特性
 
@@ -35,7 +35,7 @@ PieMDM 是一款功能強大且易於使用的開源主數據管理 (MDM) 系統
 ### 1. 克隆代碼倉庫
 
 ```bash
-git clone https://github.com/pieworks/piemdm.git
+git clone https://github.com/pieteams/piemdm.git
 cd piemdm
 ```
 
@@ -217,8 +217,8 @@ pnpm build
 ## 📞 支持
 
 - 📧 郵箱: [jasen215@gmail.com]
-- 🐛 Issues: [GitHub Issues](https://github.com/pieworks/piemdm/issues)
-- 💬 討論: [GitHub Discussions](https://github.com/pieworks/piemdm/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/pieteams/piemdm/issues)
+- 💬 討論: [GitHub Discussions](https://github.com/pieteams/piemdm/discussions)
 
 ## 🙏 致謝
 

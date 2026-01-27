@@ -10,7 +10,7 @@ The official Go SDK is located in the `packages/go/openapi` directory of the pro
 If you are developing in the PieMDM Monorepo environment, you can reference it directly via `go.work`. If referencing across projects, please ensure the project can access the SDK package.
 
 ```bash
-go get github.com/pieworks/piemdm/packages/go/openapi
+go get github.com/pieteams/piemdm/packages/go/openapi
 ```
 
 ### 1.2 SDK Usage Example
@@ -23,7 +23,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/pieworks/piemdm/packages/go/openapi/client"
+	"github.com/pieteams/piemdm/packages/go/openapi/client"
 )
 
 func main() {

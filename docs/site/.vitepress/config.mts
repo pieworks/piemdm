@@ -5,7 +5,7 @@ export default defineConfig({
     description: 'Master Data Management(MDM) Platform',
     base: '/piemdm/',
     sitemap: {
-        hostname: 'https://pieworks.github.io/piemdm/'
+        hostname: 'https://pieteams.github.io/piemdm/'
     },
     cleanUrls: true,
     ignoreDeadLinks: [
@@ -23,12 +23,12 @@ export default defineConfig({
     ],
     themeConfig: {
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/pieworks/piemdm' }
+            { icon: 'github', link: 'https://github.com/pieteams/piemdm' }
         ],
 
         footer: {
             message: 'Released under the MIT License.',
-            copyright: 'Copyright © 2019-present PieWorks'
+            copyright: 'Copyright © 2019-present PieTeams'
         },
     },
     locales: {

@@ -1,6 +1,6 @@
 # PieMDM - Hệ thống Quản lý Dữ liệu Chủ Doanh nghiệp
 
-[![CI](https://github.com/pieworks/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieworks/piemdm/actions/workflows/ci.yml)
+[![CI](https://github.com/pieteams/piemdm/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pieteams/piemdm/actions/workflows/ci.yml)
 
 [English](../../README.md)
 | [简体中文](README_zh-CN.md)
@@ -12,7 +12,7 @@
 
 PieMDM là một hệ thống Quản lý Dữ liệu Chủ (MDM) mã nguồn mở mạnh mẽ và thân thiện với người dùng, được thiết kế cho quản trị dữ liệu doanh nghiệp. Được xây dựng với backend Go và frontend Vue.js, nó cung cấp khả năng quản lý, quản trị và tích hợp dữ liệu toàn diện.
 
-**Trang web dự án**: https://pieworks.github.io/piemdm/
+**Trang web dự án**: https://pieteams.github.io/piemdm/
 
 ## 🚀 Tính năng
 
@@ -35,7 +35,7 @@ PieMDM là một hệ thống Quản lý Dữ liệu Chủ (MDM) mã nguồn m�
 ### 1. Clone Kho lưu trữ
 
 ```bash
-git clone https://github.com/pieworks/piemdm.git
+git clone https://github.com/pieteams/piemdm.git
 cd piemdm
 ```
 
@@ -217,8 +217,8 @@ Dự án này được cấp phép theo Giấy phép MIT - xem tệp [LICENSE](L
 ## 📞 Hỗ trợ
 
 - 📧 Email: [jasen215@gmail.com]
-- 🐛 Issues: [GitHub Issues](https://github.com/pieworks/piemdm/issues)
-- 💬 Thảo luận: [GitHub Discussions](https://github.com/pieworks/piemdm/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/pieteams/piemdm/issues)
+- 💬 Thảo luận: [GitHub Discussions](https://github.com/pieteams/piemdm/discussions)
 
 ## 🙏 Lời cảm ơn
 

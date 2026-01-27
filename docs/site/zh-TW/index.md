@@ -18,7 +18,7 @@ hero:
       link: /zh-TW/reference/open-api
     - theme: alt
       text: GitHub
-      link: https://github.com/pieworks/piemdm
+      link: https://github.com/pieteams/piemdm
 
 features:
   - title: 現代技術棧

@@ -10,7 +10,7 @@
 如果您在 PieMDM 的 Monorepo 環境中開發，可以通過 `go.work` 直接引用。如果是跨項目引用，請確保項目可以訪問該 SDK 包。
 
 ```bash
-go get github.com/pieworks/piemdm/packages/go/openapi
+go get github.com/pieteams/piemdm/packages/go/openapi
 ```
 
 ### 1.2 SDK 調用示例
@@ -23,7 +23,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/pieworks/piemdm/packages/go/openapi/client"
+	"github.com/pieteams/piemdm/packages/go/openapi/client"
 )
 
 func main() {

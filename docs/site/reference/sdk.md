@@ -16,7 +16,7 @@ You can directly download the SDK source files for the following languages and i
 > [!TIP]
 > **About Go Retrieval**:
 > If you are developing within the PieMDM related Monorepo, it is recommended to reference directly using Go Modules:
-> `go get github.com/pieworks/piemdm/packages/go/openapi`
+> `go get github.com/pieteams/piemdm/packages/go/openapi`
 
 ---
 
