@@ -9,10 +9,13 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/getting-started
+      link: /getting-started/what-is-piemdm
+    - theme: alt
+      text: Guide
+      link: /guide/user-and-role
     - theme: alt
       text: API Reference
-      link: /reference/api
+      link: /reference/open-api
     - theme: alt
       text: GitHub
       link: https://github.com/pieworks/piemdm

@@ -9,10 +9,13 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /zh-CN/guide/getting-started
+      link: /zh-CN/getting-started/what-is-piemdm
+    - theme: alt
+      text: 指南
+      link: /zh-CN/guide/user-and-role
     - theme: alt
       text: API 参考
-      link: /zh-CN/reference/api
+      link: /zh-CN/reference/open-api
     - theme: alt
       text: GitHub
       link: https://github.com/pieworks/piemdm
