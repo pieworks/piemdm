@@ -66,6 +66,23 @@ export default defineConfig({
                                 { text: 'Deploy', link: 'deploy' }
                             ]
                         },
+                        {
+                            base: '/getting-started/',
+                            text: 'Implementation Company List',
+                            collapsed: false,
+                            items: [
+                                { text: 'Chinese Consulting', link: 'china-consulting' },
+                                { text: 'International Consulting', link: 'international-consulting' },
+                            ]
+                        },
+                        {
+                            base: '/getting-started/',
+                            text: 'Master Data System List',
+                            collapsed: false,
+                            items: [
+                                { text: 'Master Data Systems', link: 'master-data-system' },
+                            ]
+                        },
                     ],
                     '/guide/': [
                         {
@@ -152,6 +169,23 @@ export default defineConfig({
                                 { text: '部署', link: 'deploy' }
                             ]
                         },
+                        {
+                            base: '/zh-CN/getting-started/',
+                            text: '实施公司列表',
+                            collapsed: false,
+                            items: [
+                                { text: '中国咨询公司', link: 'china-consulting' },
+                                { text: '国际咨询公司', link: 'international-consulting' },
+                            ]
+                        },
+                        {
+                            base: '/zh-CN/getting-started/',
+                            text: '主数据系统列表',
+                            collapsed: false,
+                            items: [
+                                { text: '主数据系统', link: 'master-data-system' },
+                            ]
+                        },
                     ],
                     '/zh-CN/guide/': [
                         {
@@ -236,6 +270,23 @@ export default defineConfig({
                                 { text: '什麼是 PieMdm', link: 'what-is-piemdm' },
                                 { text: '開始使用', link: 'getting-started' },
                                 { text: '部署', link: 'deploy' }
+                            ]
+                        },
+                        {
+                            base: '/zh-TW/getting-started/',
+                            text: '實施公司列表',
+                            collapsed: false,
+                            items: [
+                                { text: '中國諮詢公司', link: 'china-consulting' },
+                                { text: '國際諮詢公司', link: 'international-consulting' },
+                            ]
+                        },
+                        {
+                            base: '/zh-TW/getting-started/',
+                            text: '主數據系統列表',
+                            collapsed: false,
+                            items: [
+                                { text: '主數據系統', link: 'master-data-system' },
                             ]
                         },
                     ],
