@@ -1,3 +1,13 @@
+---
+head:
+  - - meta
+    - name: description
+      content: 什么是 PieMDM？
+  - - meta
+    - name: keywords
+      content: 主数据,MDM,PieMDM,开源,Go,Vue,Docker
+---
+
 # 什么是 PieMDM？
 
 PieMDM 是一个全栈主数据管理（Master Data Management）平台，旨在帮助企业集中管理和维护关键业务数据。

@@ -1,3 +1,13 @@
+---
+head:
+  - - meta
+    - name: description
+      content: 部署指南
+  - - meta
+    - name: keywords
+      content: 主数据,MDM,PieMDM,开源,Go,Vue,Docker
+---
+
 # 部署指南
 
 PieMDM 旨在通过容器化技术轻松部署。我们推荐使用 Docker Compose 进行生产环境部署。

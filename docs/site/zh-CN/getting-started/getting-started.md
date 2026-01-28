@@ -1,3 +1,13 @@
+---
+head:
+  - - meta
+    - name: description
+      content: 快速开始
+  - - meta
+    - name: keywords
+      content: 主数据,MDM,PieMDM,开源,Go,Vue,Docker
+---
+
 # 快速开始
 
 本指南将帮助您搭建 **PieMDM** 的开发环境。

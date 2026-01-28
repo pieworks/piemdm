@@ -1,3 +1,13 @@
+---
+head:
+  - - meta
+    - name: description
+      content: 国际主数据（MDM）咨询、实施公司清单
+  - - meta
+    - name: keywords
+      content: 主数据,MDM,埃森哲,德勤,普华永道,凯捷,Informatica,SAP,Oracle,Stibo,Semarchy,Profisee,IBM,TCS,Wipro,HCLTech,英诺森,汉得,华为,咨询,实施,数据治理,集团主数据
+---
+
 # 国际主数据（MDM）咨询、实施公司清单
 
 本文档整理 **国际市场常用的主数据管理（MDM, Master Data Management）相关厂商**，涵盖 **咨询公司、平台厂商、实施服务商**。清单以国际主流选型视角为主，同时 **包含在国际项目中常见的中国公司**。

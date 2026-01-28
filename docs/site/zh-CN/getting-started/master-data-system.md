@@ -1,3 +1,13 @@
+---
+head:
+  - - meta
+    - name: description
+      content: 主数据管理系统（MDM）系统清单
+  - - meta
+    - name: keywords
+      content: 主数据,MDM,Informatica,SAP,Oracle,Stibo,Semarchy,Profisee,IBM,TCS,Wipro,HCLTech,英诺森,汉得,华为,咨询,实施,数据治理,集团主数据
+---
+
 # 主数据管理系统（MDM）系统清单
 
 > 本文档整理 **主数据管理系统（MDM, Master Data Management）** 的主流产品，覆盖：
