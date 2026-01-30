@@ -12,9 +12,9 @@ PieMDM adopts a modern separation of frontend and backend architecture, providin
 
 ## Tech Stack
 
-### Backend (API)
+### Backend (Backend)
 
-The backend code is located in the `api/` directory. Key technology choices include:
+The backend code is located in the `backend/` directory. Key technology choices include:
 
 - **Language**: Go
 - **Web Framework**: Gin
@@ -23,9 +23,9 @@ The backend code is located in the `api/` directory. Key technology choices incl
 - **Dependency Injection**: google/wire
 - **Testing**: testify, go-sqlmock
 
-### Frontend (Web)
+### Frontend (Frontend)
 
-The frontend code is located in the `web/` directory. Key technology choices include:
+The frontend code is located in the `fronted/` directory. Key technology choices include:
 
 - **Framework**: Vue.js 3
 - **Build Tool**: Vite
