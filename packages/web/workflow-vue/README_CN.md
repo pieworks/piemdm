@@ -555,11 +555,19 @@ pnpm version major  # 1.0.0 -> 2.0.0
 在 monorepo 根目录执行:
 
 ```bash
+# 登录
+npm login --registry=https://registry.npmjs.org/
+
+# 先更新版本(如果需要)
+pnpm -C packages/web/workflow-vue version patch
+
 # 方式一:使用 -C 指定目录
 pnpm -C packages/web/workflow-vue publish --access public
 
 # 方式二:使用 filter (推荐,更符合 monorepo 习惯)
 pnpm -r --filter workflow-vue publish --access public
+pnpm -r --filter workflow-vue publish --access public --no-git-checks
+pnpm -r --filter workflow-vue publish --access public --no-git-checks --registry https://registry.npmjs.org/
 
 # 发布 beta 版本
 pnpm -r --filter workflow-vue publish --tag beta

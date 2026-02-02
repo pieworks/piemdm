@@ -1,6 +1,6 @@
 {
-  "name": "workflow-vue",
-  "version": "1.0.0",
+  "name": "@pieteams/workflow-vue",
+  "version": "1.0.1",
   "type": "module",
   "main": "./dist/workflow-vue.umd.js",
   "module": "./dist/workflow-vue.es.js",
