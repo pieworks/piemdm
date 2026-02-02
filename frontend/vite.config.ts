@@ -23,6 +23,7 @@ export default ({ mode }) => {
         '@': resolve(__dirname, 'src'),
         views: resolve(__dirname, 'src/views'),
         components: resolve(__dirname, 'src/components'),
+        'workflow-vue': '@pieteams/workflow-vue',
         vue$: 'vue/dist/vue.runtime.esm-bundler.js',
       },
     },

@@ -17,6 +17,9 @@ importers:
       '@piemdm/api-client':
         specifier: workspace:*
         version: link:../packages/web/api-client
+      '@pieteams/workflow-vue':
+        specifier: workspace:*
+        version: link:../packages/web/workflow-vue
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
@@ -71,9 +74,6 @@ importers:
       vue-select:
         specifier: 4.0.0-beta.6
         version: 4.0.0-beta.6(vue@3.5.27(typescript@5.9.3))
-      workflow-vue:
-        specifier: npm:@pieteams/workflow-vue@workspace:*
-        version: link:npm:@pieteams/workflow-vue@workspace:*
       yup:
         specifier: ^1.7.0
         version: 1.7.1
